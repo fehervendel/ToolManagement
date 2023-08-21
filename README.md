@@ -21,11 +21,13 @@ The company needs a tool managment system, where the owner can assign each tool 
 ### Service
 - New User registration
 - User login
+- Authentication with session token to grant permissions (Identity framework)
 - Tools assignment service
 - Inventory control service
 - Statistics generation
 - File Writing
 
 ## Optional tasks:
+- Optional login with google account
 - QR code generation for tools
 - QR code reading
