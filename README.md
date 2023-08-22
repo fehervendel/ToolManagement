@@ -13,10 +13,9 @@ The company needs a tool managment system, where the owner can assign each tool 
   Can mark very expensive tools for autotracking.
 
 ### Models
-- Employee: Has id, name, salary, taken tools list
-- Admin Employee: Has id, name, salary
-- Tool: id, type, price
-- CompanyInventory: stores how many tools per type the company has
+- Employee: Has id, name, salary, taken tools list, list permissions
+- Tool: id, type, price, isInStorage
+- CompanyInventory: a list of the tools per tool type
 
 ### Service
 - New User registration
@@ -24,6 +23,7 @@ The company needs a tool managment system, where the owner can assign each tool 
 - Authentication with session token to grant permissions (Identity framework)
 - Tools assignment service
 - Inventory control service
+- Permission service
 - Statistics generation
 - File Writing
 
