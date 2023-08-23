@@ -14,14 +14,12 @@ public class CompanyInventoryService
     
     public Tool AddTool(Tool tool)
     {
-        CompanyInventory.AddTool(tool);
-        return tool;
+       return CompanyInventory.AddTool(tool);
     }
 
-    public Tool RemoveTool(Tool tool)
+    public Tool RemoveToolById(int id)
     {
-        CompanyInventory.RemoveTool(tool);
-        return tool;
+        return CompanyInventory.RemoveToolById(id);
     }
 
     public List<Tool> ListAllTools()
