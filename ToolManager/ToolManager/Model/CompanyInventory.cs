@@ -1,4 +1,6 @@
-﻿namespace ToolManager.Model;
+﻿using System.Runtime.CompilerServices;
+
+namespace ToolManager.Model;
 
 public class CompanyInventory
 {
@@ -9,20 +11,17 @@ public class CompanyInventory
         CompanyTools = new List<Tool>();
     }
 
-    public void AddTool(Tool tool)
+    public Tool AddTool(Tool tool)
     {
         CompanyTools.Add(tool);
+        return tool;
     }
 
-    public void RemoveTool(Tool tool)
+    public Tool RemoveToolById(int id)
     {
-        if (CompanyTools.Contains(tool))
-        {
-            CompanyTools.Remove(tool);
-        }
-        else
-        {
-            throw new Exception("This tool does not exist.");
-        }
+
+        Tool tool = CompanyTools.First(t => t.Id == id);
+        CompanyTools.Remove(tool);
+        return tool;
     }
 }
