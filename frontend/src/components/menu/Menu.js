@@ -3,10 +3,10 @@ function Menu() {
     <div>
       <section></section>
       <div>
-        <div>My Tools</div>
-        <div>Manage Tools</div>
-        <div>Manage Users</div>
-        <div>Logout</div>
+        <button className="Button">My Tools</button>
+        <button className="Button">Manage Tools</button>
+        <button className="Button">Manage Users</button>
+        <button className="Button">Logout</button>
       </div>
       <section></section>
     </div>
