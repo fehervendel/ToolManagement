@@ -22,8 +22,8 @@ jobs:
       with:
         dotnet-version: 6.0.x
     - name: Restore dependencies
-      run: dotnet restore
+      run: dotnet restore ToolManagement/ToolManager/ToolManager.csproj
     - name: Build
-      run: dotnet build --no-restore
+      run: dotnet build ToolManagement/ToolManager/ToolManager.csproj --no-restore
     - name: Test
-      run: dotnet test --no-build --verbosity normal
+      run: dotnet test ToolManagement/ToolManager/ToolManager.csproj --no-build --verbosity normal
