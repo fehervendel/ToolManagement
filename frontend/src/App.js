@@ -16,11 +16,12 @@ function App() {
     fetchData(); 
   }, []);
 
+  console.log("ASDASD")
  console.log("Tools:" + tools);
 
   return <div>
     <div className="App">
-      {isLoggedIn === false ? <LoginMenu /> : <Menu />}
+      {isLoggedIn === true ? <LoginMenu /> : <Menu />}
       </div>
     </div>;
 }

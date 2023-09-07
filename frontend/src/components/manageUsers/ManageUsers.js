@@ -1,7 +1,11 @@
 import React from "react";
 
 function ManageUsers(){
-    return null;
+    return (
+        <div >
+          <th>Manage Users</th>
+        </div>
+      );
 }
 
 export default ManageUsers;

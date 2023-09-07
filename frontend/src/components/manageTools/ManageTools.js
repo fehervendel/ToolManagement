@@ -1,7 +1,11 @@
 import React from "react";
 
 function ManageTools(){
-    return null;
+    return (
+        <div >
+          <th>Manage Tools</th>
+        </div>
+      );
 }
 
 export default ManageTools;

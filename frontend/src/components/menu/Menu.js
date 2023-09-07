@@ -1,15 +1,22 @@
 import "./css/Menu.css"
+import { Outlet, Link } from "react-router-dom";
 function Menu() {
   return (
     <div>
       <section></section>
       <div class="topnav">
-        <a class="active" href="#home">My Tools</a>
-        <a href="#news">Manage Tools</a>
-        <a href="#contact">Manage Users</a>
-        <a href="#about">Logout</a>
+      <Link to="/mytools" className="active"> {/* Use Link to navigate to /mytools */}
+          My Tools
+        </Link>
+        <Link to="/managetools"> {/* Add Links for other pages */}
+          Manage Tools
+        </Link>
+        <Link to="/manageusers">
+          Manage Users
+        </Link>
+        <a href="#Logout">Logout</a>
       </div>
-      <section></section>
+      <section><Outlet/></section>
     </div>
   );
 }
