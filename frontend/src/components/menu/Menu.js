@@ -1,17 +1,19 @@
 import "./css/Menu.css"
-import { Outlet, Link } from "react-router-dom";
+import { Outlet, Link, useLocation } from "react-router-dom";
 function Menu() {
+const location = useLocation();
+
   return (
     <div>
       <section></section>
       <div class="topnav">
-      <Link to="/mytools" className="active"> {/* Use Link to navigate to /mytools */}
+      <Link to="/mytools" className={location.pathname === '/mytools' ? 'active' : ''}> {/* Use Link to navigate to /mytools */}
           My Tools
         </Link>
-        <Link to="/managetools"> {/* Add Links for other pages */}
+        <Link to="/managetools" className={location.pathname === '/managetools' ? 'active' : ''}> {/* Add Links for other pages */}
           Manage Tools
         </Link>
-        <Link to="/manageusers">
+        <Link to="/manageusers" className={location.pathname === '/manageusers' ? 'active' : ''}>
           Manage Users
         </Link>
         <a href="#Logout">Logout</a>

@@ -16,7 +16,7 @@ function App() {
     fetchData(); 
   }, []);
 
-  console.log("ASDASD")
+ 
  console.log("Tools:" + tools);
 
   return <div>
