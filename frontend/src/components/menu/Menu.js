@@ -6,7 +6,7 @@ const location = useLocation();
   return (
     <div>
       <section></section>
-      <div class="topnav">
+      <div className="topnav">
       <Link to="/mytools" className={location.pathname === '/mytools' ? 'active' : ''}> {/* Use Link to navigate to /mytools */}
           My Tools
         </Link>

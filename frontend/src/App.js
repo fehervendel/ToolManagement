@@ -7,14 +7,14 @@ function App() {
   const [isLoggedIn] = useState(false);
   const [tools, setTools] = useState(null);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      const response = await fetch("/api/Inventory/GetAll");
-      const jsonData = await response.json();
-      setTools(jsonData);
-    };
-    fetchData(); 
-  }, []);
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     const response = await fetch("/api/Inventory/GetAll");
+  //     const jsonData = await response.json();
+  //     setTools(jsonData);
+  //   };
+  //   fetchData(); 
+  // }, []);
 
  
  console.log("Tools:" + tools);
