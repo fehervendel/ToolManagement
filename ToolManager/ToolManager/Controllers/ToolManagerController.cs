@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
 using ToolManager.Model;
 using ToolManager.Model.DTOs;
@@ -23,7 +24,7 @@ public class ToolManagerController : ControllerBase
         _toolRepository = toolRepository;
     }
 
-    [HttpGet("GetAllEmployees")]
+    [HttpGet("GetAllEmployees"), Authorize]
     public async Task<IActionResult> GetAllEmployees()
     {
         var employees = await _employeeRepository.GetAll();
