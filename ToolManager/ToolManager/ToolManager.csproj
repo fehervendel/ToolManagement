@@ -8,8 +8,11 @@
 
     <ItemGroup>
         <PackageReference Include="DotNetEnv" Version="2.5.0" />
+<<<<<<< HEAD
         <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="6.0.16" />
         <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="6.0.16" />
+=======
+>>>>>>> origin/main
         <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="6.0.18">
           <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
           <PrivateAssets>all</PrivateAssets>

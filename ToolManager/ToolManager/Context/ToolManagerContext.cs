@@ -9,6 +9,7 @@ public class ToolManagerContext : DbContext
     public DbSet<Employee> Employees { get; set; }
     public DbSet<Tool> Tools { get; set; }
     
+    
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
         DotNetEnv.Env.Load();
