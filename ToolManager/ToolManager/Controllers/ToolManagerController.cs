@@ -24,7 +24,7 @@ public class ToolManagerController : ControllerBase
         _toolRepository = toolRepository;
     }
 
-    [HttpGet("GetAllEmployees"), Authorize]
+    [HttpGet("GetAllEmployees")]
     public async Task<IActionResult> GetAllEmployees()
     {
         var employees = await _employeeRepository.GetAll();

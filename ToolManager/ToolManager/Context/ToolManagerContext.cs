@@ -1,12 +1,12 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using ToolManager.Model;
 using DotNetEnv;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 namespace ToolManager.Context;
 
-public class ToolManagerContext : DbContext
+public class ToolManagerContext : IdentityUserContext<Employee, int>
 {
-    public DbSet<Employee> Employees { get; set; }
     public DbSet<Tool> Tools { get; set; }
     
     
@@ -20,6 +20,7 @@ public class ToolManagerContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        base.OnModelCreating(modelBuilder);
         modelBuilder.Entity<Tool>()
             .HasOne(t => t.CurrentOwnerEmployee)
             .WithMany(e => e.Tools)
@@ -33,5 +34,7 @@ public class ToolManagerContext : DbContext
         modelBuilder.Entity<Tool>()
             .Property(t => t.Price)
             .HasColumnType("decimal(18, 2)");
+
+        modelBuilder.Entity<Employee>().ToTable("Employees");
     }
 }

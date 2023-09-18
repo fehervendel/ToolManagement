@@ -9,19 +9,19 @@ public class EmployeeRepository : IEmployeeRepository
     public async Task<IEnumerable<Employee>> GetAll()
     {
         using var dbContext = new ToolManagerContext();
-        return await dbContext.Employees.ToListAsync();
+        return await dbContext.Users.ToListAsync();
     }
     
     public async Task<Employee?> GetById(int id)
     {
         using var dbContext = new ToolManagerContext();
-        return await dbContext.Employees.FirstOrDefaultAsync(e => e.Id == id);
+        return await dbContext.Users.FirstOrDefaultAsync(e => e.Id == id);
     }
     
     public async Task<Employee?> GetByName(string name)
     {
         using var dbContext = new ToolManagerContext();
-        return await dbContext.Employees.FirstOrDefaultAsync(e => e.Name == name);
+        return await dbContext.Users.FirstOrDefaultAsync(e => e.Name == name);
     }
     
     public async Task Add(Employee employee)
@@ -34,7 +34,7 @@ public class EmployeeRepository : IEmployeeRepository
     public async Task Delete(int id)
     {
         using var dbContext = new ToolManagerContext();
-        Employee employee = await dbContext.Employees.FirstOrDefaultAsync(e => e.Id == id);
+        Employee employee = await dbContext.Users.FirstOrDefaultAsync(e => e.Id == id);
         dbContext.Remove(employee);
         await dbContext.SaveChangesAsync();
     }

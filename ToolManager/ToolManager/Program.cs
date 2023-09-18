@@ -15,7 +15,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddSingleton<IEmployeeRepository, EmployeeRepository>();
 builder.Services.AddSingleton<IToolRepository, ToolRepository>();
-builder.Services.AddDbContext<UsersContext>();
+builder.Services.AddDbContext<ToolManagerContext>();
 AddAuthetintication();
 
 var app = builder.Build();
