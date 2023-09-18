@@ -8,7 +8,8 @@ function LoginMenu() {
 
   const inputFields = [
     {className: "userName", type: "text", label: "Username:", name:"userName"},
-    {className: "password", type: "password", label: "Password:", name:"password"},
+    {className: "email", type: "email", label: "Email", name: "email"},
+    {className: "password", type: "password", label: "Password:", name:"password"}
   ];
 
   function handleInputChange(event) {

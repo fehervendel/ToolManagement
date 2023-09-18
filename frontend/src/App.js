@@ -21,7 +21,7 @@ function App() {
 
   return <div>
     <div className="App">
-      {isLoggedIn === true ? <LoginMenu /> : <Menu />}
+      {isLoggedIn === false ? <LoginMenu /> : <Menu />}
       </div>
     </div>;
 }
