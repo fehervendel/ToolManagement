@@ -13,7 +13,6 @@ public class UsersContext : IdentityUserContext<IdentityUser>
     }
     protected override void OnConfiguring(DbContextOptionsBuilder options)
     {
-        // It would be a good idea to move the connection string to user secrets
         DotNetEnv.Env.Load();
         string connectionString = DotNetEnv.Env.GetString("CONNECTION_STRING");
         options.UseSqlServer(connectionString);
