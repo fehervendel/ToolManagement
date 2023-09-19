@@ -14,7 +14,7 @@ public class AuthService : IAuthService
         _tokenService = tokenService;
     }
 
-    public async Task<AuthResult> RegisterAsync(string email, string username, string password)
+    public async Task<AuthResult> RegisterAsync(string email, string username, string password, string role)
     {
         var user = new IdentityUser
         {
@@ -28,7 +28,8 @@ public class AuthService : IAuthService
         {
             return FailedRegistration(result, email, username);
         }
-
+        
+        await _userManager.AddToRoleAsync(user, role);
         return new AuthResult(true, email, username, "", user.Id);
     }
 
@@ -59,11 +60,9 @@ public class AuthService : IAuthService
             return InvalidPassword(email, managedUser.UserName);
         }
         
-        // var roles = await _userManager.GetRolesAsync(managedUser);
-        // var role= roles.First();
-        // var accessToken = _tokenService.CreateToken(managedUser, role);
-        // return new AuthResult(true, managedUser.Email, managedUser.UserName, accessToken, managedUser.Id);
-        var accessToken = _tokenService.CreateToken(managedUser);
+        var roles = await _userManager.GetRolesAsync(managedUser);
+        var role= roles.First();
+        var accessToken = _tokenService.CreateToken(managedUser, role);
         return new AuthResult(true, managedUser.Email, managedUser.UserName, accessToken, managedUser.Id);
     }
 

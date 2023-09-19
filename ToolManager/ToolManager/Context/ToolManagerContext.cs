@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 namespace ToolManager.Context;
 
-public class ToolManagerContext : IdentityUserContext<IdentityUser>
+public class ToolManagerContext : IdentityDbContext<IdentityUser, IdentityRole, string>
 {
     public DbSet<Tool> Tools { get; set; }
     public DbSet<Employee> Employees { get; set; }

@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ToolManager.Context;
 
@@ -11,9 +12,10 @@ using ToolManager.Context;
 namespace ToolManager.Migrations
 {
     [DbContext(typeof(ToolManagerContext))]
-    partial class ToolManagerContextModelSnapshot : ModelSnapshot
+    [Migration("20230919122429_addRoles")]
+    partial class addRoles
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

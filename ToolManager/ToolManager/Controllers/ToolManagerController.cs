@@ -25,7 +25,7 @@ public class ToolManagerController : ControllerBase
         _toolRepository = toolRepository;
     }
 
-    [HttpGet("GetAllEmployees"), Authorize]
+    [HttpGet("GetAllEmployees"), Authorize(Roles = "User, Admin")]
     public async Task<IActionResult> GetAllEmployees()
     {
         var employees = await _employeeRepository.GetAll();
@@ -40,7 +40,7 @@ public class ToolManagerController : ControllerBase
         }
     }
 
-    [HttpPost("AddEmployee")]
+    [HttpPost("AddEmployee"), Authorize(Roles = "Admin")]
     public async Task<IActionResult> AddEmployee(string name, decimal salary, string emailAddress)
     {
         try
@@ -63,7 +63,7 @@ public class ToolManagerController : ControllerBase
         }
     }
 
-    [HttpDelete("DeleteEmployee")]
+    [HttpDelete("DeleteEmployee"), Authorize(Roles = "Admin")]
     public async Task<IActionResult> DeleteEmployeeById(int id)
     {
         try
@@ -78,7 +78,7 @@ public class ToolManagerController : ControllerBase
         }
     }
     
-    [HttpGet("GetEmployeeById")]
+    [HttpGet("GetEmployeeById"), Authorize(Roles = "User")]
     public async Task<IActionResult> GetEmployeeById(int id)
     {
         try
