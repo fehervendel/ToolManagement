@@ -2,6 +2,7 @@ using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Models;
 using ToolManager.Context;
 using ToolManager.Model;
 using ToolManager.Repositories;
@@ -11,9 +12,9 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
-
+ConfigureSwagger();
 AddServices();
-AddAuthetintication();
+AddAuthentintication();
 AddIdentity();
 var app = builder.Build();
 
@@ -35,7 +36,7 @@ app.MapControllers();
 
 app.Run();
 
-void AddAuthetintication()
+void AddAuthentintication()
 {
     builder.Services
         .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
@@ -78,9 +79,40 @@ void AddServices()
 {
     builder.Services.AddControllers();
     builder.Services.AddEndpointsApiExplorer();
-    builder.Services.AddSwaggerGen();
     builder.Services.AddSingleton<IEmployeeRepository, EmployeeRepository>();
     builder.Services.AddSingleton<IToolRepository, ToolRepository>();
     builder.Services.AddDbContext<ToolManagerContext>();
     builder.Services.AddScoped<IAuthService, AuthService>();
+    builder.Services.AddScoped<ITokenService, TokenService>();
+}
+
+void ConfigureSwagger()
+{
+    builder.Services.AddSwaggerGen(option =>
+    {
+        option.SwaggerDoc("v1", new OpenApiInfo{ Title = "Demo API", Version = "v1"});
+        option.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+        {
+            In = ParameterLocation.Header,
+            Description = "Please enter a valid token",
+            Name = "Authorization",
+            Type = SecuritySchemeType.Http,
+            BearerFormat = "JWT",
+            Scheme = "Bearer"
+        });
+        option.AddSecurityRequirement(new OpenApiSecurityRequirement
+        {
+            {
+                new OpenApiSecurityScheme
+                {
+                    Reference = new OpenApiReference
+                    {
+                        Type = ReferenceType.SecurityScheme,
+                        Id = "Bearer"
+                    }
+                },
+                new string[]{}
+            }
+        });
+    });
 }
