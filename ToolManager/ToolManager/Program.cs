@@ -1,23 +1,20 @@
 using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
 using ToolManager.Context;
 using ToolManager.Model;
 using ToolManager.Repositories;
+using ToolManager.Services.Authentication;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
-builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
-builder.Services.AddSingleton<IEmployeeRepository, EmployeeRepository>();
-builder.Services.AddSingleton<IToolRepository, ToolRepository>();
-builder.Services.AddDbContext<ToolManagerContext>();
-AddAuthetintication();
 
+AddServices();
+AddAuthetintication();
+AddIdentity();
 var app = builder.Build();
 
 
@@ -58,4 +55,32 @@ void AddAuthetintication()
                 ),
             };
         });
+}
+
+void AddIdentity()
+{
+    builder.Services
+        .AddIdentityCore<IdentityUser>(options =>
+        {
+            options.SignIn.RequireConfirmedAccount = false;
+            options.User.RequireUniqueEmail = true;
+            options.Password.RequireDigit = false;
+            options.Password.RequiredLength = 6;
+            options.Password.RequireNonAlphanumeric = false;
+            options.Password.RequireUppercase = false;
+            options.Password.RequireLowercase = false;
+        })
+        .AddRoles<IdentityRole>()
+        .AddEntityFrameworkStores<ToolManagerContext>();
+}
+
+void AddServices()
+{
+    builder.Services.AddControllers();
+    builder.Services.AddEndpointsApiExplorer();
+    builder.Services.AddSwaggerGen();
+    builder.Services.AddSingleton<IEmployeeRepository, EmployeeRepository>();
+    builder.Services.AddSingleton<IToolRepository, ToolRepository>();
+    builder.Services.AddDbContext<ToolManagerContext>();
+    builder.Services.AddScoped<IAuthService, AuthService>();
 }

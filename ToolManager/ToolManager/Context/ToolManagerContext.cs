@@ -1,14 +1,15 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using ToolManager.Model;
 using DotNetEnv;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 namespace ToolManager.Context;
 
-public class ToolManagerContext : IdentityUserContext<Employee, int>
+public class ToolManagerContext : IdentityUserContext<IdentityUser>
 {
     public DbSet<Tool> Tools { get; set; }
-    
+    public DbSet<Employee> Employees { get; set; }
     
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
@@ -36,5 +37,11 @@ public class ToolManagerContext : IdentityUserContext<Employee, int>
             .HasColumnType("decimal(18, 2)");
 
         modelBuilder.Entity<Employee>().ToTable("Employees");
+        
+        modelBuilder.Entity<Employee>()
+            .HasOne(e => e.IdentityUser)
+            .WithMany()
+            .HasForeignKey(e => e.IdentityUserId)
+            .IsRequired(false);
     }
 }

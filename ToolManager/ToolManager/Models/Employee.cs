@@ -6,14 +6,18 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 namespace ToolManager.Model;
 
-public class Employee : IdentityUser<int>
+public class Employee
 {
-    public string Name { get; init; }
+    [Key]
+    public int Id { get; init; }
+    public string Name { get; set; }
     public decimal Salary { get; set; } //Can change salary later
     public List<Tool> Tools { get; set; }
     
     [NotMapped]
     public List<Permission> Permissions { get; set; }
-    public string EmailAddress { get; init; }
+    public string EmailAddress { get; set; }
     
+    public string IdentityUserId { get; set; }
+    public IdentityUser IdentityUser { get; set; }
 }
