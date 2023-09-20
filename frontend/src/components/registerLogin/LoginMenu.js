@@ -2,10 +2,13 @@ import React from "react";
 import { useState } from "react";
 import Registration from "./Registration";
 import "./register.css"
+import Cookies from "js-cookie";
 function LoginMenu() {
 
   const [isRegistrationClicked, setIsRegistrationClicked] = useState(false);
   const [inputValues, setInputValues] = useState({});
+  const [saveEmail, setSaveEmail] = useState("");
+  const [savePassword, setSavePassword] = useState("");
 
   const inputFields = [
     {className: "userName", type: "text", label: "Username:", name:"userName"},
@@ -14,6 +17,7 @@ function LoginMenu() {
   ];
 
   function handleInputChange(event) {
+    event.preventDefault();
     const { name, value } = event.target;
     setInputValues({...inputValues, [name]: value});
   }
@@ -27,28 +31,26 @@ function LoginMenu() {
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-      const response = await fetch('/Auth/Login', {
+      await fetch('/Auth/Login', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          email: inputValues.email,
-          password: inputValues.password,
+          email: saveEmail,
+          password: savePassword,
         }),
-      });
-  
-      if (response.ok) {
-        // Login was successful, handle accordingly
-        const data = await response.json();
-        console.log(data); // You can do something with the response data
-      } else {
-        // Login failed, handle accordingly
-        console.error('Login failed');
-      }
-    } catch (error) {
-      // Handle network errors
-      console.error('Network error:', error);
+      })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log("Login response:", data);
+          //save data.token to cookie
+          Cookies.set("userEmail", data.email, { expires: 10 });
+          Cookies.set("userUserName", data.userName, { expires: 10 });
+          Cookies.set("userToken", data.token, { expires: 10 });
+      })
+    } catch(err){
+      console.error(err);
     }
   };
 
@@ -75,6 +77,7 @@ function LoginMenu() {
         // Registration failed, handle accordingly
         console.error('Registration failed');
       }
+      setIsRegistrationClicked(false);
     } catch (error) {
       // Handle network errors
       console.error('Network error:', error);
@@ -95,12 +98,12 @@ function LoginMenu() {
         <div>
         <section>
         <div className="register-input">
-          <label>Username:</label>
-          <input type="text"></input>
+          <label>Email:</label>
+          <input type="text" onChange={(e) => setSaveEmail(e.target.value)}></input>
       </div>
       <div className="register-input" id="passwordInput">
         <label>Password:</label>
-        <input type="password"></input>
+        <input type="password" onChange={(e) => setSavePassword(e.target.value)}></input>
       </div>
       </section>
       <div>
