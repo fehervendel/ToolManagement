@@ -2,10 +2,10 @@ import { useEffect, useState } from "react";
 import Menu from "./components/menu/Menu.js";
 import LoginMenu from "./components/registerLogin/LoginMenu.js";
 import "./App.css";
+import Cookies from "js-cookie";
 
 function App() {
-  const [isLoggedIn] = useState(false);
-  const [tools, setTools] = useState(null);
+  const token = Cookies.get("userToken");
 
   // useEffect(() => {
   //   const fetchData = async () => {
@@ -16,12 +16,10 @@ function App() {
   //   fetchData(); 
   // }, []);
 
- 
- console.log("Tools:" + tools);
 
   return <div>
     <div className="App">
-      {isLoggedIn === false ? <LoginMenu /> : <Menu />}
+      {token === null ? <LoginMenu /> : <Menu />}
       </div>
     </div>;
 }

@@ -44,10 +44,12 @@ function LoginMenu() {
       .then((res) => res.json())
       .then((data) => {
         console.log("Login response:", data);
-          //save data.token to cookie
+        if(data && data.email && data.userName && data.token){
           Cookies.set("userEmail", data.email, { expires: 10 });
           Cookies.set("userUserName", data.userName, { expires: 10 });
           Cookies.set("userToken", data.token, { expires: 10 });
+          window.location.reload();
+        } 
       })
     } catch(err){
       console.error(err);
@@ -70,14 +72,20 @@ function LoginMenu() {
       });
   
       if (response.ok) {
-        // Registration was successful, handle accordingly
         const data = await response.json();
-        console.log(data); // You can do something with the response data
+        console.log(data); 
+        setIsRegistrationClicked(false);
       } else {
-        // Registration failed, handle accordingly
-        console.error('Registration failed');
+        // const data = await response.json();
+
+        // if(data.InvalidEmail || data.DuplicateEmail[0]){
+        //   console.log("Invalid or existing email");
+        // }
+                                                                  //trying to respond to user what is wrong with the registration
+        // if(data.DuplicateUserName[0] !== undefined){
+        //   console.log("Invalid or existing username");
+        // }
       }
-      setIsRegistrationClicked(false);
     } catch (error) {
       // Handle network errors
       console.error('Network error:', error);
