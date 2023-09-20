@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using ToolManager.Model;
 using ToolManager.Model.DTOs;
 using ToolManager.Repositories;
+using ToolManager.Services.Authentication;
 
 namespace ToolManager.Controllers;
 using Microsoft.AspNetCore.Mvc;
@@ -16,7 +17,7 @@ public class ToolManagerController : ControllerBase
     private readonly ILogger<ToolManagerController> _logger;
     private IEmployeeRepository _employeeRepository;
     private IToolRepository _toolRepository;
-    
+
 
     public ToolManagerController(ILogger<ToolManagerController> logger, IEmployeeRepository employeeRepository, IToolRepository toolRepository)
     {
@@ -63,7 +64,7 @@ public class ToolManagerController : ControllerBase
         }
     }
 
-    [HttpDelete("DeleteEmployee"), Authorize(Roles = "Admin")]
+    [HttpDelete("DeleteEmployeeById"), Authorize(Roles = "Admin")]
     public async Task<IActionResult> DeleteEmployeeById(int id)
     {
         try
@@ -78,7 +79,7 @@ public class ToolManagerController : ControllerBase
         }
     }
     
-    [HttpGet("GetEmployeeById"), Authorize(Roles = "User")]
+    [HttpGet("GetEmployeeById"), Authorize(Roles = "Admin")]
     public async Task<IActionResult> GetEmployeeById(int id)
     {
         try
@@ -93,7 +94,7 @@ public class ToolManagerController : ControllerBase
         }
     }
     
-    [HttpGet("GetEmployeeByName")]
+    [HttpGet("GetEmployeeByName"), Authorize(Roles = "Admin")]
     public async Task<IActionResult> GetEmployeeByName(string name)
     {
         try
@@ -108,7 +109,7 @@ public class ToolManagerController : ControllerBase
         }
     }
     
-    [HttpGet("GetAllTools")]
+    [HttpGet("GetAllTools"), Authorize(Roles = "Admin, User")]
     public async Task<IActionResult> GetAllTools()
     {
         var tools = await _toolRepository.GetAll();
@@ -123,7 +124,7 @@ public class ToolManagerController : ControllerBase
         }
     }
     
-    [HttpPost("AddTool")]
+    [HttpPost("AddTool"), Authorize(Roles = "Admin")]
     public async Task<IActionResult> AddTool(string type, decimal price)
     {
         try
@@ -145,7 +146,7 @@ public class ToolManagerController : ControllerBase
         }
     }
 
-    [HttpDelete("DeleteToolById")]
+    [HttpDelete("DeleteToolById"), Authorize(Roles = "Admin")]
     public async Task<IActionResult> DeleteToolById(int id)
     {
         try
@@ -160,7 +161,7 @@ public class ToolManagerController : ControllerBase
         }
     }
 
-    [HttpGet("GetToolsByName")]
+    [HttpGet("GetToolsByName"), Authorize(Roles = "Admin")]
     public async Task<IActionResult> GetToolsByName(string name)
     {
         try
@@ -175,7 +176,7 @@ public class ToolManagerController : ControllerBase
         }
     }
     
-    [HttpGet("GetToolById")]
+    [HttpGet("GetToolById"), Authorize(Roles = "Admin, User")]
     public async Task<IActionResult> GetToolById(int id)
     {
         try

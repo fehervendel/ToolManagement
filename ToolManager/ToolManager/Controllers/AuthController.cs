@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using ToolManager.Contracts;
 using ToolManager.Model;
 using ToolManager.Repositories;
@@ -28,6 +29,34 @@ public class AuthController : ControllerBase
         }
 
         var result = await _authenticationService.RegisterAsync(request.Email, request.Username, request.Password, "User");
+        
+        if (!result.Success)
+        {
+            AddErrors(result);
+            return BadRequest(ModelState);
+        } 
+        
+        Employee employee = new Employee
+        {
+            Name = request.Username,
+            EmailAddress = request.Email,
+            IdentityUserId = result.IdentityUserId
+        };
+        
+        await _employeeRepository.Add(employee);
+        
+        return CreatedAtAction(nameof(Register), new RegistrationResponse(result.Email, result.UserName));
+    }
+    
+    [HttpPost("RegisterAdmin"), Authorize(Roles = "Admin")]
+    public async Task<ActionResult<RegistrationResponse>> RegisterAdmin(RegistrationRequest request)
+    {
+        if (!ModelState.IsValid)
+        {
+            return BadRequest(ModelState);
+        }
+
+        var result = await _authenticationService.RegisterAsync(request.Email, request.Username, request.Password, "Admin");
         
         if (!result.Success)
         {

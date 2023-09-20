@@ -14,7 +14,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 ConfigureSwagger();
 AddServices();
-AddAuthentintication();
+AddAuthentication();
 AddIdentity();
 
 var app = builder.Build();
@@ -38,12 +38,13 @@ app.MapControllers();
 
 app.Run();
 
-void AddAuthentintication()
+void AddAuthentication()
 {
     builder.Services
         .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
         .AddJwtBearer(options =>
         {
+            var jwtSettings = builder.Configuration.GetSection("JwtSettings");
             options.TokenValidationParameters = new TokenValidationParameters()
             {
                 ClockSkew = TimeSpan.Zero,
@@ -51,10 +52,10 @@ void AddAuthentintication()
                 ValidateAudience = true,
                 ValidateLifetime = true,
                 ValidateIssuerSigningKey = true,
-                ValidIssuer = "apiWithAuthBackend",
-                ValidAudience = "apiWithAuthBackend",
+                ValidIssuer = jwtSettings["ValidIssuer"],
+                ValidAudience = jwtSettings["ValidAudience"],
                 IssuerSigningKey = new SymmetricSecurityKey(
-                    Encoding.UTF8.GetBytes("!SomethingSecret!")
+                    Encoding.UTF8.GetBytes(jwtSettings["IssuerSigningKey"])
                 ),
             };
         });
@@ -64,8 +65,8 @@ void AddServices()
 {
     builder.Services.AddControllers();
     builder.Services.AddEndpointsApiExplorer();
-    builder.Services.AddSingleton<IEmployeeRepository, EmployeeRepository>();
-    builder.Services.AddSingleton<IToolRepository, ToolRepository>();
+    builder.Services.AddScoped<IEmployeeRepository, EmployeeRepository>(); //Changed from AddSingleton -- is this ok?
+    builder.Services.AddScoped<IToolRepository, ToolRepository>(); //Changed from AddSingleton
     builder.Services.AddDbContext<ToolManagerContext>();
     builder.Services.AddScoped<IAuthService, AuthService>();
     builder.Services.AddScoped<ITokenService, TokenService>();

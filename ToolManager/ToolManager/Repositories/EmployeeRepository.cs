@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using ToolManager.Context;
 using ToolManager.Model;
 
@@ -6,6 +7,12 @@ namespace ToolManager.Repositories;
 
 public class EmployeeRepository : IEmployeeRepository
 {
+    private readonly UserManager<IdentityUser> _userManager;
+
+    public EmployeeRepository(UserManager<IdentityUser> userManager)
+    {
+        _userManager = userManager;
+    }
     public async Task<IEnumerable<Employee>> GetAll()
     {
         using var dbContext = new ToolManagerContext();
@@ -32,10 +39,18 @@ public class EmployeeRepository : IEmployeeRepository
     }
     
     public async Task Delete(int id)
-    {
+    { 
         using var dbContext = new ToolManagerContext();
-        Employee employee = await dbContext.Employees.FirstOrDefaultAsync(e => e.Id == id);
-        dbContext.Remove(employee);
+
+        Employee employeeToDelete = await dbContext.Employees.FirstOrDefaultAsync(e => e.Id == id);
+        dbContext.Remove(employeeToDelete);
+        
+        var stringId = employeeToDelete.IdentityUserId;
+        var user = await _userManager.FindByIdAsync(stringId);
+
+        var result = await _userManager.DeleteAsync(user);
+        employeeToDelete.IdentityUserId = null;
+        
         await dbContext.SaveChangesAsync();
     }
     
