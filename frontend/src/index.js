@@ -7,6 +7,7 @@ import ErrorPage from './components/ErrorPage/ErrorPage';
 import MyTools from './components/myTools/MyTools';
 import ManageTools from './components/manageTools/ManageTools';
 import ManageUsers from './components/manageUsers/ManageUsers';
+import AddNewTool from './components/addNewTool/AddNewTool';
 
 
 
@@ -28,6 +29,10 @@ const router = createBrowserRouter([
       {
         path: "/manageusers",
         element: <ManageUsers />
+      },
+      {
+        path: "/addnewtool",
+        element: <AddNewTool />
       }
     ]
   }

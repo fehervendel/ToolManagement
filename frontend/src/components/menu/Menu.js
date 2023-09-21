@@ -30,6 +30,9 @@ const handleLogout = () => {
         <Link to="/manageusers" className={location.pathname === '/manageusers' || location.pathname === '/ManageUsers' ? 'active' : ''}>
           Manage Users
         </Link>
+        <Link to="addnewtool" className={location.pathname === '/addnewtool' ? 'active' : ''}>
+          Add New Tool
+        </Link>
       </div>)}
           <a href="#Logout" onClick={(e) => {e.preventDefault(); handleLogout()}}>Logout</a>
       </div>
