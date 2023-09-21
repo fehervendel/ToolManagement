@@ -103,15 +103,20 @@ function LoginMenu() {
           console.log("Username is already taken");
           setUserNameWarning("Username is already taken");
         }
-        if(inputValues.userName === ""){
+        if(inputValues.userName === undefined || inputValues.userName === ""){
           console.log("Please enter a username");
           setUserNameWarning("Please enter a username");
         }
-        if(data.DuplicateEmail && data.DuplicateEmail){
+        if(data.DuplicateEmail && data.DuplicateEmail || inputValues.email === undefined){
           console.log("Email is already taken");
           setEmailWarning("Email is already taken");
         }
-        if(inputValues.password.length < 6){
+        if(inputValues.email === undefined){
+          console.log("Email is already taken");
+          setEmailWarning("Please anter an email address");
+        }
+        
+        if(inputValues.password === undefined || inputValues.password.length < 6){
           console.log("Password must be at least 6 characters");
           setPassowrdWarning("Password must be at least 6 characters");
         }
