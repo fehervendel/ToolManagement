@@ -1,18 +1,31 @@
 import React from "react";
 import { useEffect, useState } from "react";
+import Cookies from "js-cookie";
+import "./manageUsers.css"
 
 function ManageUsers(){
   const [users, setUsers] = useState(null);
+  const token = Cookies.get("userToken");
+  const role = Cookies.get("userRole");
 
 
   useEffect(() => {
     const fetchData = async () => {
-      const response = await fetch("/api/ToolManager/GetAllEmployees");
+      const response = await fetch("/api/ToolManager/GetAllEmployees", {
+        method: 'GET',
+        headers: {
+          'Authorization': `Bearer ${token}`
+        }
+        });
       const jsonData = await response.json();
       setUsers(jsonData);
     };
     fetchData(); 
-  }, []);
+  }, [token]);
+
+  if(role !== "Admin"){
+    return <div>Only admins can see this page!</div>
+  }
 
       return (
         <table className="tables">
@@ -22,6 +35,7 @@ function ManageUsers(){
       <th>Name</th>
       <th>Email</th>
       <th>Salary</th>
+      <th>Edit</th>
     </tr>
   </thead>
           <tbody>
@@ -31,6 +45,7 @@ function ManageUsers(){
                 <td>{user.name}</td>
                 <td>{user.emailAddress}</td>
                 <td>{user.salary}</td>
+                <td><button className="Button">Edit</button></td>
               </tr>
             ))}
           </tbody>

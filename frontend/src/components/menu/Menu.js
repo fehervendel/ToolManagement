@@ -1,30 +1,36 @@
 import Cookies from "js-cookie";
 import "./css/Menu.css"
-import { Outlet, Link, useLocation, Navigate } from "react-router-dom";
+import { Outlet, Link, useLocation} from "react-router-dom";
 import LoginMenu from "../registerLogin/LoginMenu";
+import { useNavigate } from "react-router-dom";
 function Menu() {
 const location = useLocation();
 const token = Cookies.get("userToken");
+const userRole = Cookies.get("userRole");
+const navigate = useNavigate();
 
 const handleLogout = () => {
   Cookies.remove("userToken");
-  window.location.reload();
+  navigate("/MyTools");
 }
-console.log("Token from menu js:", token);
+
   return (
     <div>
     {token !== undefined ? (<div>
         <section></section>
       <div className="topnav">
-      <Link to="/mytools" className={location.pathname === '/mytools' ? 'active' : ''}> {/* Use Link to navigate to /mytools */}
+      {userRole === "User" ? (
+        <Link to="/mytools" className={location.pathname === '/MyTools' || location.pathname === '/mytools' ? 'active' : ''}>
           My Tools
         </Link>
-        <Link to="/managetools" className={location.pathname === '/managetools' ? 'active' : ''}> {/* Add Links for other pages */}
+      ) : (<div>
+        <Link to="/managetools" className={location.pathname === '/managetools' || location.pathname === '/ManageTools' ? 'active' : ''}>
           Manage Tools
         </Link>
-        <Link to="/manageusers" className={location.pathname === '/manageusers' ? 'active' : ''}>
+        <Link to="/manageusers" className={location.pathname === '/manageusers' || location.pathname === '/ManageUsers' ? 'active' : ''}>
           Manage Users
         </Link>
+      </div>)}
           <a href="#Logout" onClick={(e) => {e.preventDefault(); handleLogout()}}>Logout</a>
       </div>
       <section><Outlet/></section>

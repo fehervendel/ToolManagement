@@ -3,12 +3,16 @@ import { useState } from "react";
 import Registration from "./Registration";
 import "./register.css"
 import Cookies from "js-cookie";
+import { useParams, useNavigate } from "react-router-dom";
 function LoginMenu() {
 
   const [isRegistrationClicked, setIsRegistrationClicked] = useState(false);
   const [inputValues, setInputValues] = useState({});
   const [saveEmail, setSaveEmail] = useState("");
   const [savePassword, setSavePassword] = useState("");
+  const navigate = useNavigate();
+  const token = Cookies.get("userToken");
+  
 
   const inputFields = [
     {className: "userName", type: "text", label: "Username:", name:"userName"},
@@ -48,7 +52,16 @@ function LoginMenu() {
           Cookies.set("userEmail", data.email, { expires: 10 });
           Cookies.set("userUserName", data.userName, { expires: 10 });
           Cookies.set("userToken", data.token, { expires: 10 });
-          window.location.reload();
+          
+          const tokenPayload = JSON.parse(atob(data.token.split('.')[1]));
+          const userRole = tokenPayload['http://schemas.microsoft.com/ws/2008/06/identity/claims/role'];
+          Cookies.set("userRole", userRole, { expires: 10 });
+
+          if(userRole === "Admin"){
+            navigate("/ManageUsers");
+          } else {
+           navigate("/MyTools");
+          }
         } 
       })
     } catch(err){
@@ -76,15 +89,14 @@ function LoginMenu() {
         console.log(data); 
         setIsRegistrationClicked(false);
       } else {
-        // const data = await response.json();
+        const data = await response.json();
 
-        // if(data.InvalidEmail || data.DuplicateEmail[0]){
-        //   console.log("Invalid or existing email");
-        // }
-                                                                  //trying to respond to user what is wrong with the registration
-        // if(data.DuplicateUserName[0] !== undefined){
-        //   console.log("Invalid or existing username");
-        // }
+        if(data.InvalidEmail || data.DuplicateEmail[0]){
+          console.log("Invalid or existing email");
+        }
+        if(data.DuplicateUserName[0] !== undefined){
+          console.log("Invalid or existing username");
+        }
       }
     } catch (error) {
       // Handle network errors
@@ -138,7 +150,7 @@ function LoginMenu() {
           
         </form>
         <div>
-          <button className="Button" onClick={back}>Back</button>
+          <button className="Button" onClick={back}>Already have an account? Sign in</button>
         </div>
         </div>
       )}

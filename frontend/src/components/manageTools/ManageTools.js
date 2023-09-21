@@ -1,20 +1,29 @@
 import React, { useEffect, useState } from "react";
 import "./ManageTools.css"
+import Cookies from "js-cookie";
 
 function ManageTools(){
   const [tools, setTools] = useState(null);
-
+  const token = Cookies.get("userToken");
+  const role = Cookies.get("userRole");
 
   useEffect(() => {
     const fetchData = async () => {
-      const response = await fetch("/api/ToolManager/GetAllTools");
+      const response = await fetch("/api/ToolManager/GetAllTools", {
+        method: 'GET',
+        headers: {
+          'Authorization': `Bearer ${token}`
+        }
+      });
       const jsonData = await response.json();
       setTools(jsonData);
     };
     fetchData(); 
-  }, []);
+  }, [token]);
 
-
+  if(role !== "Admin"){
+    return <div>Only admins can see this page!</div>
+  }
     return (
         <table className="tables">
           <thead>
