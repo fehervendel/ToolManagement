@@ -125,14 +125,14 @@ public class ToolManagerController : ControllerBase
     }
     
     [HttpPost("AddTool"), Authorize(Roles = "Admin")]
-    public async Task<IActionResult> AddTool(string type, decimal price)
+    public async Task<IActionResult> AddTool([FromBody]ToolDTO toolDto)
     {
         try
         {
             Tool toolToAdd = new Tool
             {
-                Type = type,
-                Price = price,
+                Type = toolDto.Type,
+                Price = toolDto.Price,
             };
         
             await _toolRepository.Add(toolToAdd);
