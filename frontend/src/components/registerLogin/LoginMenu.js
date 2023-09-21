@@ -3,7 +3,7 @@ import { useState } from "react";
 import Registration from "./Registration";
 import "./register.css"
 import Cookies from "js-cookie";
-import { useParams, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 function LoginMenu() {
 
   const [isRegistrationClicked, setIsRegistrationClicked] = useState(false);
@@ -12,6 +12,9 @@ function LoginMenu() {
   const [savePassword, setSavePassword] = useState("");
   const navigate = useNavigate();
   const token = Cookies.get("userToken");
+  const [userNameWarning, setUserNameWarning] = useState("");
+  const [emailWarning, setEmailWarning] = useState("");
+  const [passwordWarning, setPassowrdWarning] = useState("");
   
 
   const inputFields = [
@@ -19,6 +22,8 @@ function LoginMenu() {
     {className: "email", type: "email", label: "Email:", name: "email"},
     {className: "password", type: "password", label: "Password:", name:"password"}
   ];
+
+  const warnings = [userNameWarning, emailWarning, passwordWarning];
 
   function handleInputChange(event) {
     event.preventDefault();
@@ -71,6 +76,9 @@ function LoginMenu() {
 
   const handleRegistrationSubmit = async (event) => {
     event.preventDefault();
+    setUserNameWarning("");
+    setEmailWarning("");
+    setPassowrdWarning("");
     try {
       const response = await fetch('/Auth/Register', {
         method: 'POST',
@@ -90,12 +98,22 @@ function LoginMenu() {
         setIsRegistrationClicked(false);
       } else {
         const data = await response.json();
-
-        if(data.InvalidEmail || data.DuplicateEmail[0]){
-          console.log("Invalid or existing email");
+        console.log(data);
+        if(data.DuplicateUserName && data.DuplicateUserName){
+          console.log("Username is already taken");
+          setUserNameWarning("Username is already taken");
         }
-        if(data.DuplicateUserName[0] !== undefined){
-          console.log("Invalid or existing username");
+        if(inputValues.userName === ""){
+          console.log("Please enter a username");
+          setUserNameWarning("Please enter a username");
+        }
+        if(data.DuplicateEmail && data.DuplicateEmail){
+          console.log("Email is already taken");
+          setEmailWarning("Email is already taken");
+        }
+        if(inputValues.password.length < 6){
+          console.log("Password must be at least 6 characters");
+          setPassowrdWarning("Password must be at least 6 characters");
         }
       }
     } catch (error) {
@@ -144,6 +162,7 @@ function LoginMenu() {
             label={inputField.label}
             name={inputField.name}
             value={inputValues[inputField.name] || ""}
+            warnings={warnings[index]}
             onChange={handleInputChange}/>
           ))}
           <button className="Button" type="submit">Submit</button>

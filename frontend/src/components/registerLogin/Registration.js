@@ -7,6 +7,7 @@ function Registration(props){
     const label = props.label;
     const name = props.name;
     const value = props.value;
+    const warnings = props.warnings;
 
     return (
         <div className={className}>
@@ -14,6 +15,7 @@ function Registration(props){
                 {label}
             </label>
             <input type={type} name={name} value={value} onChange={props.onChange}/>
+            <div className="warning">{warnings}</div>
         </div>
     )
 }
