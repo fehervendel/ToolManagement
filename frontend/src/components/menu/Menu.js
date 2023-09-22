@@ -34,7 +34,7 @@ const handleLogout = () => {
           Add New Tool
         </Link>
       </div>)}
-          <a href="#Logout" onClick={(e) => {e.preventDefault(); handleLogout()}}>Logout</a>
+          <a href="#Logout" id="logOutButton" onClick={(e) => {e.preventDefault(); handleLogout()}}>Logout</a>
       </div>
       <section><Outlet/></section>
     </div>) : (<LoginMenu></LoginMenu>)}
