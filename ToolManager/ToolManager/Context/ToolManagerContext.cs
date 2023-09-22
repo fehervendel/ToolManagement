@@ -42,6 +42,7 @@ public class ToolManagerContext : IdentityDbContext<IdentityUser, IdentityRole, 
             .HasOne(e => e.IdentityUser)
             .WithMany()
             .HasForeignKey(e => e.IdentityUserId)
+            .OnDelete(DeleteBehavior.Cascade)
             .IsRequired(false);
     }
 }
