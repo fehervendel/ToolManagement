@@ -8,6 +8,7 @@ import MyTools from './components/myTools/MyTools';
 import ManageTools from './components/manageTools/ManageTools';
 import ManageUsers from './components/manageUsers/ManageUsers';
 import AddNewTool from './components/addNewTool/AddNewTool';
+import EditUser from './components/EditUser/EditUser';
 
 
 
@@ -33,6 +34,10 @@ const router = createBrowserRouter([
       {
         path: "/addnewtool",
         element: <AddNewTool />
+      },
+      {
+        path: "/edituser/:userId",
+        element: <EditUser />
       }
     ]
   }

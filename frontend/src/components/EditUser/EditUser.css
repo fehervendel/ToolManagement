@@ -1,0 +1,46 @@
+/* EditUser.css */
+
+.EditButton {
+    width: auto; /* Adjust the width as needed */
+    padding: 5px 10px; /* Adjust padding as needed */
+    font-size: 14px;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    background-color: #007bff;
+    margin: 2px;
+  }
+  
+  .EditButton:hover {
+    background-color: #00b327;
+  }
+  
+  .NewSalaryInput {
+    width: 100px; /* Adjust the width as needed */
+    padding: 5px; /* Adjust padding as needed */
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  
+  .tables {
+    border-collapse: collapse;
+    width: 100%;
+    border: 1px solid #ccc;
+  }
+  
+  .tables th,
+  .tables td {
+    padding: 8px;
+    text-align: left;
+  }
+  
+  .tables th {
+    background-color: #f2f2f2;
+  }
+  
+  .tables tbody tr:nth-child(even) {
+    background-color: #f9f9f9;
+  }
+  
