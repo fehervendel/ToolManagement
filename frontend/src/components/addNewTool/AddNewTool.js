@@ -1,10 +1,12 @@
 import Cookies from "js-cookie";
 import React, { useState } from "react";
+import "./AddNewTool.css";
 
 function AddNewTool() {
   const [toolName, setToolName] = useState("");
   const [toolPrice, setToolPrice] = useState("");
   const token = Cookies.get("userToken");
+  const [addToolSucces, setAddToolSucces] = useState(false);
 
 
 const handleSubmit = async (e) => {
@@ -23,21 +25,22 @@ const handleSubmit = async (e) => {
                 price: toolPrice,
             }),
         })
-        console.log(toolName);
-        console.log(toolPrice);
-
         setToolName("");
         setToolPrice("");
+        setAddToolSucces(true);
+        setTimeout(() => {
+          setAddToolSucces(false);
+        }, 5000);
     } catch (error) {
         console.error("Error:", error);
     }
 };
 
   return (
-    <div>
+    <div className="add-tool-container">
       <h2>Add New Tool</h2>
       <form onSubmit={handleSubmit}>
-        <div>
+        <div className="form-group">
           <label htmlFor="toolName">Name:</label>
           <input
             type="text"
@@ -47,7 +50,7 @@ const handleSubmit = async (e) => {
             required
           />
         </div>
-        <div>
+        <div className="form-group">
           <label htmlFor="toolPrice">Price:</label>
           <input
             type="number"
@@ -58,8 +61,9 @@ const handleSubmit = async (e) => {
             required
           />
         </div>
-        <button type="submit">Add Tool</button>
+        <button type="submit" className="submit-button">Add Tool</button>
       </form>
+      {addToolSucces ? (<div className="success">Tool added successfully!</div>) : ("")}
     </div>
   );
 }
