@@ -9,7 +9,7 @@ public class ToolRepository : IToolRepository
     public async Task<IEnumerable<Tool>> GetAll()
     {
         using var dbContext = new ToolManagerContext();
-        return await dbContext.Tools.ToListAsync();
+        return await dbContext.Tools.Include(tool => tool.CurrentOwnerEmployee.IdentityUser).ToListAsync();
     }
     
     public async Task<Tool?> GetById(int id)

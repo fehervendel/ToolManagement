@@ -12,12 +12,14 @@ public class Employee
     public int Id { get; init; }
     public string Name { get; set; }
     public decimal Salary { get; set; } //Can change salary later
+    
+    [JsonIgnore]
     public List<Tool> Tools { get; set; }
     
     [NotMapped]
     public List<Permission> Permissions { get; set; } //Need to remove this
     public string EmailAddress { get; set; }
     
-    public string IdentityUserId { get; set; }
+    public string? IdentityUserId { get; set; }
     public IdentityUser IdentityUser { get; set; }
 }
