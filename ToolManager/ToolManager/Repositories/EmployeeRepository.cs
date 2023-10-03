@@ -65,5 +65,14 @@ public class EmployeeRepository : IEmployeeRepository
         dbContext.Update(employee);
         await dbContext.SaveChangesAsync();
     }
-    
+
+    public async Task UpdateSalary(int id, decimal salary)
+    {
+        using var dbContext = new ToolManagerContext();
+
+        Employee employee = await dbContext.Employees.FirstOrDefaultAsync(e => e.Id == id);
+        employee.Salary = salary;
+        dbContext.Update(employee);
+        await dbContext.SaveChangesAsync();
+    }
 }

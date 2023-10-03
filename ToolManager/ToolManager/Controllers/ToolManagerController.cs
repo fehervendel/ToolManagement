@@ -205,4 +205,19 @@ public class ToolManagerController : ControllerBase
             return StatusCode(500, "Internal server Error");
         }
     }
+    
+    [HttpPut("UpdateEmployeeSalary"), Authorize(Roles = "Admin")]
+    public async Task<IActionResult> UpdateEmployeeSalary(int id, decimal salary)
+    {
+        try
+        {
+            await _employeeRepository.UpdateSalary(id, salary);
+            return Ok();
+        }
+        catch (Exception e)
+        {
+            _logger.LogError(e, "Error updating employee salary");
+            return StatusCode(500, "Internal server Error");
+        }
+    }
 }
