@@ -2,10 +2,11 @@ import React, { useEffect, useState } from "react";
 import "./ManageTools.css"
 import Cookies from "js-cookie";
 
-function ManageTools(){
+function ManageTools() {
   const [tools, setTools] = useState(null);
   const token = Cookies.get("userToken");
   const role = Cookies.get("userRole");
+  const [employeeData, setEmployeeData] = useState(null);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -21,6 +22,19 @@ function ManageTools(){
     fetchData(); 
   }, [token]);
 
+  useEffect(() => {
+    if (tools) {
+      // Filter out tools with null currentOwnerEmployeeId
+      const toolsWithOwner = tools.filter(tool => tool.currentOwnerEmployeeId !== null);
+
+      // Fetch employee data for tools with owners
+      const employeePromises = toolsWithOwner.map(tool => fetchEmployee(tool.currentOwnerEmployeeId));
+      Promise.all(employeePromises)
+        .then(employeeData => setEmployeeData(employeeData))
+        .catch(error => console.error(error));
+    }
+  }, [tools]);
+
   const fetchEmployee = async (id) => {
     const response = await fetch(`/api/ToolManager/GetEmployeeById?id=${id}`, {
       method: 'GET',
@@ -29,33 +43,39 @@ function ManageTools(){
       }
     });
     const jsonData = await response.json();
+    return jsonData;
   };
 
-  if(role !== "Admin"){
+  if (role !== "Admin") {
     return <div>Only admins can see this page!</div>
   }
-    return (
-        <table className="tables">
-          <thead>
-    <tr>
-      <th>Id</th>
-      <th>Type</th>
-      <th>Price</th>
-      <th>Owner</th>
-    </tr>
-  </thead>
-          <tbody>
-            {tools && tools.map((tool, index) =>(
-              <tr key={index}>
-                <td>{tool.id}</td>
-                <td>{tool.type}</td>
-                <td>{tool.price}</td>
-                <td>{tool.currentOwnerEmployeeId === null ? ("No Current Owner") : (console.log("ASDASDASDASD" + fetchEmployee(tool.currentOwnerEmployeeId)))}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      );
+
+  return (
+    <table className="tables">
+      <thead>
+        <tr>
+          <th>Id</th>
+          <th>Type</th>
+          <th>Price</th>
+          <th>Owner</th>
+        </tr>
+      </thead>
+      <tbody>
+        {tools && tools.map((tool, index) => (
+          <tr key={index}>
+            <td>{tool.id}</td>
+            <td>{tool.type}</td>
+            <td>{tool.price}</td>
+            <td>
+              {tool.currentOwnerEmployeeId === null ? "No Current Owner" : (
+                employeeData ? employeeData[index].name : "Loading..."
+              )}
+            </td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  );
 }
 
 export default ManageTools;
