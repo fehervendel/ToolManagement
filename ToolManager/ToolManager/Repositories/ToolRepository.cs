@@ -45,4 +45,16 @@ public class ToolRepository : IToolRepository
         dbContext.Update(tool);
         await dbContext.SaveChangesAsync();
     }
+    
+    public async Task AddToolToEmployee(int employeeId, int toolId)
+    {
+        using var dbContext = new ToolManagerContext();
+        Employee employee = await dbContext.Employees.FirstOrDefaultAsync(e => e.Id == employeeId);
+        Tool tool = await dbContext.Tools.FirstOrDefaultAsync(t => t.Id == toolId);
+
+        tool.CurrentOwnerEmployeeId = employeeId;
+        tool.CurrentOwnerEmployee = employee;
+        dbContext.Update(tool);
+        await dbContext.SaveChangesAsync();
+    }
 }

@@ -190,4 +190,19 @@ public class ToolManagerController : ControllerBase
             return StatusCode(500, "Internal server Error");
         }
     }
+
+    [HttpPut("AddToolToEmployee"), Authorize(Roles = "Admin")]
+    public async Task<IActionResult> AddToolToEmployee(int employeeId, int toolId)
+    {
+        try
+        {
+            await _toolRepository.AddToolToEmployee(employeeId, toolId);
+            return Ok();
+        }
+        catch (Exception e)
+        {
+            _logger.LogError(e, "Error adding tool to employee");
+            return StatusCode(500, "Internal server Error");
+        }
+    }
 }

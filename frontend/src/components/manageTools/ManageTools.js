@@ -21,6 +21,16 @@ function ManageTools(){
     fetchData(); 
   }, [token]);
 
+  const fetchEmployee = async (id) => {
+    const response = await fetch(`/api/ToolManager/GetEmployeeById?id=${id}`, {
+      method: 'GET',
+      headers: {
+        'Authorization': `Bearer ${token}`
+      }
+    });
+    const jsonData = await response.json();
+  };
+
   if(role !== "Admin"){
     return <div>Only admins can see this page!</div>
   }
@@ -40,7 +50,7 @@ function ManageTools(){
                 <td>{tool.id}</td>
                 <td>{tool.type}</td>
                 <td>{tool.price}</td>
-                <td>{tool.currentOwnerEmployee === null ? ("No Current Owner") : (tool.currentOwnerEmployee.name)}</td>
+                <td>{tool.currentOwnerEmployeeId === null ? ("No Current Owner") : (console.log("ASDASDASDASD" + fetchEmployee(tool.currentOwnerEmployeeId)))}</td>
               </tr>
             ))}
           </tbody>

@@ -11,4 +11,5 @@ public interface IEmployeeRepository
     Task Add(Employee employee);
     Task Delete(int id);
     Task Update(Employee employee);
+    
 }
