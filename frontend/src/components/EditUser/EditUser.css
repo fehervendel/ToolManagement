@@ -15,6 +15,22 @@
   .EditButton:hover {
     background-color: #00b327;
   }
+
+  .RemoveButton {
+    width: auto; /* Adjust the width as needed */
+    padding: 5px 10px; /* Adjust padding as needed */
+    font-size: 14px;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    background-color: #007bff;
+    margin: 2px;
+  }
+  
+  .RemoveButton:hover {
+    background-color: #b30000;
+  }
   
   .NewSalaryInput {
     width: 100px; /* Adjust the width as needed */
@@ -44,3 +60,16 @@
     background-color: #f9f9f9;
   }
   
+/* EditUser.css */
+
+.user-details-box {
+  background-color: #f9f9f9;
+  padding: 20px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  max-width: 400px; 
+  width: 100%;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); 
+  margin: 20px auto; 
+}
+
