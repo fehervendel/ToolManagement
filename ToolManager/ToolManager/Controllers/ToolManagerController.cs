@@ -220,4 +220,19 @@ public class ToolManagerController : ControllerBase
             return StatusCode(500, "Internal server Error");
         }
     }
+    
+    [HttpPut("RemoveToolFromEmployee"), Authorize(Roles = "Admin")]
+    public async Task<IActionResult> RemoveToolFromEmployee(int id)
+    {
+        try
+        {
+            await _toolRepository.RemoveToolFromEmployee(id);
+            return Ok();
+        }
+        catch (Exception e)
+        {
+            _logger.LogError(e, "Error removing tool from employee");
+            return StatusCode(500, "Internal server Error");
+        }
+    }
 }

@@ -11,4 +11,5 @@ public interface IToolRepository
     Task Delete(int id);
     Task Update(Tool tool);
     Task AddToolToEmployee(int employeeId, int toolId);
+    Task RemoveToolFromEmployee(int id);
 }

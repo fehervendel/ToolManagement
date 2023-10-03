@@ -13,15 +13,5 @@ public class Tool
     public Employee? CurrentOwnerEmployee { get; set; }
 
     public int? CurrentOwnerEmployeeId { get; set; }
-    // public Tool(int? id, string type, decimal price)
-    // {
-    //     Id = id;
-    //     Type = type;
-    //     Price = price;
-    // }
-    //
-    // public void AssignToolToEmployee(Employee employee)
-    // {
-    //     CurrentOwnerEmployee = employee;
-    // }
+   
 }

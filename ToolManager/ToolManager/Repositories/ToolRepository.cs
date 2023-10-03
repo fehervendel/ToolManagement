@@ -57,4 +57,13 @@ public class ToolRepository : IToolRepository
         dbContext.Update(tool);
         await dbContext.SaveChangesAsync();
     }
+
+    public async Task RemoveToolFromEmployee(int id)
+    {
+        using var dbContext = new ToolManagerContext();
+        Tool tool = await dbContext.Tools.FirstOrDefaultAsync(t => t.Id == id);
+        tool.CurrentOwnerEmployeeId = null;
+        dbContext.Update(tool);
+        await dbContext.SaveChangesAsync();
+    }
 }

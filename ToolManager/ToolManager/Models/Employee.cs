@@ -15,7 +15,7 @@ public class Employee
     public List<Tool> Tools { get; set; }
     
     [NotMapped]
-    public List<Permission> Permissions { get; set; }
+    public List<Permission> Permissions { get; set; } //Need to remove this
     public string EmailAddress { get; set; }
     
     public string IdentityUserId { get; set; }
