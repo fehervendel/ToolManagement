@@ -42,8 +42,13 @@ public class EmployeeRepository : IEmployeeRepository
     { 
         using var dbContext = new ToolManagerContext();
 
-        Employee employeeToDelete = await dbContext.Employees.FirstOrDefaultAsync(e => e.Id == id);
         
+        Tool tool = await dbContext.Tools.FirstOrDefaultAsync(t => t.CurrentOwnerEmployeeId == id);
+        tool.CurrentOwnerEmployeeId = null;
+        dbContext.Update(tool);
+        await dbContext.SaveChangesAsync();
+        
+        Employee employeeToDelete = await dbContext.Employees.FirstOrDefaultAsync(e => e.Id == id);
         var stringId = employeeToDelete.IdentityUserId;
         var identityUser = await _userManager.FindByIdAsync(stringId);
 
