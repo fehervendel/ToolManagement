@@ -117,12 +117,12 @@ function LoginMenu() {
         }
       }
     } catch (error) {
-      // Handle network errors
+      
       console.error('Network error:', error);
     }
   };
   
-// testEnd
+
   function back(){
     setIsRegistrationClicked(false);
   }

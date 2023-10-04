@@ -1,20 +1,23 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import Cookies from "js-cookie";
-import "./manageUsers.css"
+import "./manageUsers.css";
 
 function ManageUsers() {
   const [users, setUsers] = useState(null);
+  const [searchId, setSearchId] = useState("");
+  const [searchName, setSearchName] = useState("");
+  const [searchEmail, setSearchEmail] = useState("");
   const token = Cookies.get("userToken");
   const role = Cookies.get("userRole");
 
   useEffect(() => {
     const fetchData = async () => {
       const response = await fetch("/api/ToolManager/GetAllEmployees", {
-        method: 'GET',
+        method: "GET",
         headers: {
-          'Authorization': `Bearer ${token}`
-        }
+          Authorization: `Bearer ${token}`,
+        },
       });
       const jsonData = await response.json();
       setUsers(jsonData);
@@ -22,35 +25,72 @@ function ManageUsers() {
     fetchData();
   }, [token]);
 
+  const filteredUsers = users
+    ? users.filter(
+        (user) =>
+          user.emailAddress.toLowerCase().includes(searchEmail.toLowerCase()) &&
+          (user.id.toString().includes(searchId) || searchId === "") &&
+          (user.name.toLowerCase().includes(searchName.toLowerCase()) ||
+            searchName === "")
+      )
+    : [];
+
   if (role !== "Admin") {
-    return <div>Only admins can see this page!</div>
+    return <div>Only admins can see this page!</div>;
   }
 
   return (
-    <table className="tables">
-      <thead>
-        <tr>
-          <th>Id</th>
-          <th>Name</th>
-          <th>Email</th>
-          <th>Salary</th>
-          <th>Edit</th>
-        </tr>
-      </thead>
-      <tbody>
-        {users && users.map((user, index) => (
-          <tr key={index}>
-            <td>{user.id}</td>
-            <td>{user.name}</td>
-            <td>{user.emailAddress}</td>
-            <td>{user.salary}</td>
-            <td>
-              <Link to={`/edituser/${user.id}`}><button type="button" className="EditButton">Edit</button></Link>
-            </td>
+    <div>
+      <div className="search-bar">
+        <input
+          type="text"
+          placeholder="Search by Email"
+          value={searchEmail}
+          onChange={(e) => setSearchEmail(e.target.value)}
+        />
+        <input
+          type="text"
+          placeholder="Search by ID"
+          value={searchId}
+          onChange={(e) => setSearchId(e.target.value)}
+        />
+        <input
+          type="text"
+          placeholder="Search by Name"
+          value={searchName}
+          onChange={(e) => setSearchName(e.target.value)}
+        />
+        <button type="button">Search</button>
+      </div>
+      <table className="tables">
+        <thead>
+          <tr>
+            <th>Id</th>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Salary</th>
+            <th>Edit</th>
           </tr>
-        ))}
-      </tbody>
-    </table>
+        </thead>
+        <tbody>
+          {filteredUsers.map((user, index) => (
+            <tr key={index}>
+              <td>{user.id}</td>
+              <td>{user.name}</td>
+              <td>{user.emailAddress}</td>
+              <td>{user.salary}</td>
+              <td>
+                <Link to={`/edituser/${user.id}`}>
+                  <button type="button" className="EditButton">
+                    Edit
+                  </button>
+                </Link>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
   );
 }
 

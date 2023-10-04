@@ -1,19 +1,55 @@
+
+.search-bar {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  margin-top: 20px;
+  margin-right: 20px;
+}
+
+
+.search-bar input[type="text"] {
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  width: 200px;
+  margin-right: 5px;
+}
+
+
+.search-bar button {
+  padding: 5px 10px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.search-bar button:hover {
+  background-color: #0056b3;
+}
+
 .tables {
-    border-collapse: collapse;
-    width: 100%;
-    border: 1px solid #ccc;
-  }
-  
-  .tables th,
-  .tables td {
-    padding: 8px;
-    text-align: left;
-  }
-  
-  .tables th {
-    background-color: #f2f2f2;
-  }
-  
-  .tables tbody tr:nth-child(even) {
-    background-color: #f9f9f9;
-  }
+  margin-top: 15px;
+}
+
+.tables {
+  border-collapse: collapse;
+  width: 100%;
+  border: 1px solid #ccc;
+}
+
+.tables th,
+.tables td {
+  padding: 8px;
+  text-align: left;
+}
+
+.tables th {
+  background-color: #f2f2f2;
+}
+
+.tables tbody tr:nth-child(even) {
+  background-color: #f9f9f9;
+}

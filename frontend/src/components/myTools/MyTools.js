@@ -21,6 +21,7 @@ function MyTools() {
     };
     fetchData(); 
   }, [token]);
+  
   return(
       <div>
         <table className="tables">
@@ -35,13 +36,11 @@ function MyTools() {
           <tbody>
             {tools &&
               tools.map((tool, index) => (
-                console.log(tool.currentOwnerEmployee),
-                tool.currentOwnerEmployee.EmailAdress === null ? (
+                tool.currentOwnerEmployee.emailAddress === employeeEmail ? (
                   <tr key={index}>
                     <td>{tool.id}</td>
                     <td>{tool.type}</td>
                     <td>{tool.price}</td>
-                    <td><button type="button" className="EditButton">Finished</button></td>
                   </tr>
                 ) : null
               ))}
