@@ -36,7 +36,7 @@ function MyTools() {
           <tbody>
             {tools &&
               tools.map((tool, index) => (
-                tool.currentOwnerEmployee.emailAddress === employeeEmail ? (
+                tool.currentOwnerEmployee && tool.currentOwnerEmployee.emailAddress === employeeEmail ? (
                   <tr key={index}>
                     <td>{tool.id}</td>
                     <td>{tool.type}</td>

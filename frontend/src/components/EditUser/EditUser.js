@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
 import "./EditUser.css";
 
@@ -13,6 +13,9 @@ function EditUser() {
   const [isRemovingTool, setIsRemovingTool] = useState(false); 
   const token = Cookies.get("userToken");
   const role = Cookies.get("userRole");
+  const navigate = useNavigate();
+
+  
 
   useEffect(() => {
     const fetchUserDetails = async () => {
@@ -142,6 +145,34 @@ function EditUser() {
     }
   };
 
+  const handleDeleteUser = async () => {
+    try {
+      const response = await fetch(`/api/ToolManager/DeleteEmployeeById?id=${userId}`, {
+        method: "DELETE",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+  
+      if (response.status === 200) {
+        navigate("/manageusers");
+        console.log(`User with ID ${userId} has been deleted`);
+      } else {
+        
+        console.error(`Error deleting user: ${response.status}`);
+      }
+    } catch (error) {
+      console.error("Error deleting user:", error);
+    }
+  };
+
+  const showDeleteConfirmation = () => {
+    const confirmDelete = window.confirm("Are you sure you want to delete this user?");
+    if (confirmDelete) {
+      handleDeleteUser();
+    }
+  };
+
   if (!user) {
     return <div>Loading user details...</div>;
   }
@@ -174,6 +205,11 @@ function EditUser() {
             </button>
           </div>
         )}
+        <p></p>
+        <button onClick={showDeleteConfirmation} className="RemoveButton">
+          Delete User
+        </button>
+        
       </div>
       <div>
         <table className="tables">

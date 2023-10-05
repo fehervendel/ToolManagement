@@ -52,6 +52,30 @@ function ManageTools() {
     return jsonData;
   };
 
+  const handleRemoveToolClick = async (toolId) => {
+  try {
+    const response = await fetch(`/api/ToolManager/DeleteToolById?id=${toolId}`, {
+      method: "DELETE",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    if (response.status === 200) {
+      // Tool has been deleted successfully
+      // Remove the deleted tool from the tools list
+      setTools((prevTools) => prevTools.filter((tool) => tool.id !== toolId));
+      console.log(`Tool with ID ${toolId} has been deleted`);
+    } else {
+      // Handle the error scenario
+      console.error(`Error deleting tool: ${response.status}`);
+    }
+  } catch (error) {
+    // Handle network or other errors
+    console.error("Error deleting tool:", error);
+  }
+};
+
   if (role !== "Admin") {
     return <div>Only admins can see this page!</div>;
   }
@@ -80,6 +104,7 @@ function ManageTools() {
             <th>Type</th>
             <th>Price</th>
             <th>Owner</th>
+            <th>Delete tool</th>
           </tr>
         </thead>
         <tbody>
@@ -92,8 +117,16 @@ function ManageTools() {
                 {tool.currentOwnerEmployeeId === null
                   ? "No Current Owner"
                   : employeeData
-                  ? employeeData[index].name
+                  ? tool.currentOwnerEmployee.name
                   : "Loading..."}
+              </td>
+              <td>
+                <button
+                  className="RemoveButton"
+                  onClick={() => handleRemoveToolClick(tool.id)}
+                >
+                  Delete Tool
+                </button>
               </td>
             </tr>
           ))}
