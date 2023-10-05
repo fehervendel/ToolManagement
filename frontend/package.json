@@ -45,6 +45,5 @@
   "main": "index.js",
   "keywords": [],
   "author": "",
-  "license": "ISC",
-  "proxy": "https://localhost:7173"
+  "license": "ISC"
 }
