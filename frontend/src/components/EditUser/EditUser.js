@@ -188,40 +188,42 @@ function EditUser() {
             </tr>
           </thead>
           <tbody>
-            {tools &&
-              tools.map((tool, index) => (
-                tool.currentOwnerEmployeeId === null || tool.currentOwnerEmployeeId === parseInt(userId) ? (
-                  <tr key={index}>
-                    <td>{tool.id}</td>
-                    <td>{tool.type}</td>
-                    <td>{tool.price}</td>
-                    <td>{tool.currentOwnerEmployeeId === null ? "No current owner" : user.name}</td>
-                    <td>
-                      <button
-                        type="button"
-                        className="EditButton"
-                        onClick={() => handleAddToUserClick(Number(tool.id))}
-                        disabled={isAddingTool}
-                      >
-                        {isAddingTool ? "Adding..." : "Add to user"}
-                      </button>
-                    </td>
-                    <td>
-                      {tool.currentOwnerEmployeeId === parseInt(userId) && (
-                        <button
-                          type="button"
-                          className="RemoveButton"
-                          onClick={() => handleRemoveFromUserClick(Number(tool.id))}
-                          disabled={isRemovingTool} 
-                        >
-                          {isRemovingTool ? "Removing..." : "Remove tool"}
-                        </button>
-                      )}
-                    </td>
-                  </tr>
-                ) : null
-              ))}
-          </tbody>
+  {tools &&
+    tools.map((tool, index) => (
+      tool.currentOwnerEmployeeId === null || tool.currentOwnerEmployeeId === parseInt(userId) ? (
+        <tr key={index}>
+          <td>{tool.id}</td>
+          <td>{tool.type}</td>
+          <td>{tool.price}</td>
+          <td>{tool.currentOwnerEmployeeId === null ? "No current owner" : user.name}</td>
+          <td>
+            {tool.currentOwnerEmployeeId !== parseInt(userId) && ( // Conditionally render the "Add to user" button
+              <button
+                type="button"
+                className="EditButton"
+                onClick={() => handleAddToUserClick(Number(tool.id))}
+                disabled={isAddingTool}
+              >
+                {isAddingTool ? "Adding..." : "Add to user"}
+              </button>
+            )}
+          </td>
+          <td>
+            {tool.currentOwnerEmployeeId === parseInt(userId) && (
+              <button
+                type="button"
+                className="RemoveButton"
+                onClick={() => handleRemoveFromUserClick(Number(tool.id))}
+                disabled={isRemovingTool} 
+              >
+                {isRemovingTool ? "Removing..." : "Remove tool"}
+              </button>
+            )}
+          </td>
+        </tr>
+      ) : null
+    ))}
+</tbody>
         </table>
       </div>
     </div>
