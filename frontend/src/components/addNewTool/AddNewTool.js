@@ -14,7 +14,7 @@ const handleSubmit = async (e) => {
     console.log(toolName);
     console.log(toolPrice);
     try {
-        const response = await fetch("/api/ToolManager/AddTool", {
+        const response = await fetch("https://toolmanagerserver.onrender.com/api/ToolManager/AddTool", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -24,13 +24,16 @@ const handleSubmit = async (e) => {
                 type: toolName,
                 price: toolPrice,
             }),
-        })
-        setToolName("");
+        }).then((res) => res.json())
+        .then((data) => {
+          console.log(data);
+          setToolName("");
         setToolPrice("");
         setAddToolSucces(true);
         setTimeout(() => {
           setAddToolSucces(false);
         }, 5000);
+        })
     } catch (error) {
         console.error("Error:", error);
     }
