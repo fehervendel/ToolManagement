@@ -9,7 +9,14 @@ using ToolManager.Repositories;
 using ToolManager.Services.Authentication;
 
 var builder = WebApplication.CreateBuilder(args);
-
+var configBuilder = new ConfigurationBuilder()
+    .SetBasePath(Directory.GetCurrentDirectory())
+    .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
+    .AddUserSecrets<Program>();
+IConfiguration configuration = configBuilder.Build();
+var validIssuer = configuration["JwtSettings:ValidIssuer"];
+var validAudience = configuration["JwtSettings:ValidAudience"];
+var issuerSigningKey = configuration["JwtSettings:IssuerSigningKey"];
 // Add services to the container.
 
 ConfigureSwagger();
@@ -52,10 +59,14 @@ void AddAuthentication()
                 ValidateAudience = true,
                 ValidateLifetime = true,
                 ValidateIssuerSigningKey = true,
-                ValidIssuer = jwtSettings["ValidIssuer"],
-                ValidAudience = jwtSettings["ValidAudience"],
-                IssuerSigningKey = new SymmetricSecurityKey(
-                    Encoding.UTF8.GetBytes(jwtSettings["IssuerSigningKey"])
+                //ValidIssuer = jwtSettings["ValidIssuer"],
+                //ValidAudience = jwtSettings["ValidAudience"],
+                //IssuerSigningKey = new SymmetricSecurityKey(
+                    //Encoding.UTF8.GetBytes(jwtSettings["IssuerSigningKey"])
+                    ValidIssuer = validIssuer,
+                    ValidAudience = validAudience,
+                    IssuerSigningKey = new SymmetricSecurityKey(
+                        Encoding.UTF8.GetBytes(issuerSigningKey)
                 ),
             };
         });
