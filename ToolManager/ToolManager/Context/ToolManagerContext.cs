@@ -13,8 +13,16 @@ public class ToolManagerContext : IdentityDbContext<IdentityUser, IdentityRole, 
     
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
-        DotNetEnv.Env.Load();
-        string connectionString = DotNetEnv.Env.GetString("CONNECTION_STRING");
+        // DotNetEnv.Env.Load();
+        // string connectionString = DotNetEnv.Env.GetString("CONNECTION_STRING");
+        
+        var configBuilder = new ConfigurationBuilder()
+            .SetBasePath(Directory.GetCurrentDirectory())
+            .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
+            .AddUserSecrets<Program>();
+        IConfiguration configuration = configBuilder.Build();
+
+        string connectionString = configuration["ConnectionStrings:Db1"];
         optionsBuilder.UseSqlServer(
             connectionString);
     }
