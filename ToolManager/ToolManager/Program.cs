@@ -24,9 +24,22 @@ AddServices();
 AddAuthentication();
 AddIdentity();
 
+
+
 var app = builder.Build();
 AddRoles();
 AddAdmin();
+Cors();
+
+void Cors()
+{
+    app.UseCors(builder =>
+    {
+        builder.AllowAnyOrigin(); // You can replace this with specific origins
+        builder.AllowAnyHeader();
+        builder.AllowAnyMethod();
+    });
+}
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
