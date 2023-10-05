@@ -12,8 +12,8 @@ using ToolManager.Context;
 namespace ToolManager.Migrations
 {
     [DbContext(typeof(ToolManagerContext))]
-    [Migration("20230922113101_addInitialMigration")]
-    partial class addInitialMigration
+    [Migration("20231004123857_InitialMigration")]
+    partial class InitialMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
