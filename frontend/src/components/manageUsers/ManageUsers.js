@@ -42,25 +42,27 @@ function ManageUsers() {
   return (
     <div>
       <div className="search-bar">
+        <label>Search by email:
         <input
           type="text"
-          placeholder="Search by Email"
+          placeholder="Email address"
           value={searchEmail}
-          onChange={(e) => setSearchEmail(e.target.value)}
-        />
+          onChange={(e) => setSearchEmail(e.target.value)}/>
+        </label>
+        <label>Search by ID:
         <input
           type="text"
-          placeholder="Search by ID"
+          placeholder="ID"
           value={searchId}
-          onChange={(e) => setSearchId(e.target.value)}
-        />
+          onChange={(e) => setSearchId(e.target.value)}/>
+        </label>
+        <label>Serch by name:
         <input
           type="text"
-          placeholder="Search by Name"
+          placeholder="Name"
           value={searchName}
-          onChange={(e) => setSearchName(e.target.value)}
-        />
-        <button type="button">Search</button>
+          onChange={(e) => setSearchName(e.target.value)}/>
+        </label>
       </div>
       <table className="tables">
         <thead>
