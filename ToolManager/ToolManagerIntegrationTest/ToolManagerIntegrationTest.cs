@@ -68,7 +68,116 @@ public class ToolManagerIntegrationTest : WebApplicationFactory<Program>
 
         Assert.That(response.StatusCode, Is.EqualTo(System.Net.HttpStatusCode.OK));
         Assert.IsNotNull(employees);
-        Assert.IsTrue(employees.Count > 0);
+        Assert.IsTrue(employees is { Count: > 0 });
+    }
+    
+    
+    
+    [Test]
+    public async Task GetAllTools_ShouldReturnOk()
+    {
+        var response = await _client.GetAsync("/api/ToolManager/GetAllTools");
+
+        response.EnsureSuccessStatusCode();
+
+        var content = await response.Content.ReadAsStringAsync();
+        var tools = JsonSerializer.Deserialize<List<Tool>>(content);
+
+        Assert.That(response.StatusCode, Is.EqualTo(System.Net.HttpStatusCode.OK));
+        Assert.IsNotNull(tools);
+        Assert.IsTrue(tools is { Count: > 0 });
+    }
+    
+    [Test]
+    public async Task GetEmployeeById_ShouldReturnOk()
+    {
+        int id = 1;
+        var options = new JsonSerializerOptions
+        {
+            PropertyNameCaseInsensitive = true
+        };
+        var response = await _client.GetAsync($"/api/ToolManager/GetEmployeeById?id={id}");
+
+        response.EnsureSuccessStatusCode();
+
+        var content = await response.Content.ReadAsStringAsync();
+        var employee = JsonSerializer.Deserialize<Employee>(content, options);
+        var employeeToGet = new Employee
+        {
+            Id = 1,
+            Name = "user1",
+            Salary = (decimal)10.00,
+            EmailAddress = "email@email.com",
+            IdentityUserId = "7f254662-3d21-4d50-a8b9-55fa19862775"
+        };
+
+        Assert.That(response.StatusCode, Is.EqualTo(System.Net.HttpStatusCode.OK));
+        Assert.IsNotNull(employee);
+        Assert.That(employeeToGet.Id, Is.EqualTo(employee.Id));
+        Assert.That(employeeToGet.Salary, Is.EqualTo(employee.Salary));
+        Assert.That(employeeToGet.EmailAddress, Is.EqualTo(employee.EmailAddress));
+        Assert.That(employeeToGet.IdentityUserId, Is.EqualTo(employee.IdentityUserId));
+        Assert.That(employeeToGet.Name, Is.EqualTo(employee.Name));
+    }
+    
+    [Test]
+    public async Task GetEmployeeById_ShouldReturnNoContent()
+    {
+        int id = 9999999;
+        var options = new JsonSerializerOptions
+        {
+            PropertyNameCaseInsensitive = true
+        };
+        var response = await _client.GetAsync($"/api/ToolManager/GetEmployeeById?id={id}");
+        
+        response.EnsureSuccessStatusCode();
+        
+        Assert.That(response.StatusCode, Is.EqualTo(System.Net.HttpStatusCode.NoContent));
+    }
+    
+    [Test]
+    public async Task GettoolById_ShouldReturnNoContent()
+    {
+        int id = 9999999;
+        var options = new JsonSerializerOptions
+        {
+            PropertyNameCaseInsensitive = true
+        };
+        var response = await _client.GetAsync($"/api/ToolManager/GetToolById?id={id}");
+        
+        response.EnsureSuccessStatusCode();
+        
+        Assert.That(response.StatusCode, Is.EqualTo(System.Net.HttpStatusCode.NoContent));
+    }
+    
+    [Test]
+    public async Task GetToolById_ShouldReturnOk()
+    {
+        int id = 1;
+        var options = new JsonSerializerOptions
+        {
+            PropertyNameCaseInsensitive = true
+        };
+        var response = await _client.GetAsync($"/api/ToolManager/GetToolById?id={id}");
+
+        response.EnsureSuccessStatusCode();
+
+        var content = await response.Content.ReadAsStringAsync();
+        var tool = JsonSerializer.Deserialize<Tool>(content, options);
+        var toolToGet = new Tool
+        {
+            Id = 1,
+            Type = "Crowbar",
+            Price = (decimal)20.00,
+            CurrentOwnerEmployeeId = null
+        };
+
+        Assert.That(response.StatusCode, Is.EqualTo(System.Net.HttpStatusCode.OK));
+        Assert.IsNotNull(tool);
+        Assert.That(toolToGet.Id, Is.EqualTo(tool.Id));
+        Assert.That(toolToGet.Type, Is.EqualTo(tool.Type));
+        Assert.That(toolToGet.Price, Is.EqualTo(tool.Price));
+        Assert.That(toolToGet.CurrentOwnerEmployeeId, Is.EqualTo(tool.CurrentOwnerEmployeeId));
     }
 
     [Test]
