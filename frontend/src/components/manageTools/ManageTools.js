@@ -11,7 +11,7 @@ function ManageTools() {
 
   useEffect(() => {
     const fetchData = async () => {
-      const response = await fetch("/api/ToolManager/GetAllTools", {
+      const response = await fetch("https://toolmanagerserver.onrender.com/api/ToolManager/GetAllTools", {
         method: "GET",
         headers: {
           Authorization: `Bearer ${token}`,
@@ -40,7 +40,7 @@ function ManageTools() {
 
   const fetchEmployee = async (id) => {
     const response = await fetch(
-      `/api/ToolManager/GetEmployeeById?id=${id}`,
+      `https://toolmanagerserver.onrender.com/api/ToolManager/GetEmployeeById?id=${id}`,
       {
         method: "GET",
         headers: {
@@ -54,7 +54,7 @@ function ManageTools() {
 
   const handleRemoveToolClick = async (toolId) => {
   try {
-    const response = await fetch(`/api/ToolManager/DeleteToolById?id=${toolId}`, {
+    const response = await fetch(`https://toolmanagerserver.onrender.com/api/ToolManager/DeleteToolById?id=${toolId}`, {
       method: "DELETE",
       headers: {
         Authorization: `Bearer ${token}`,
