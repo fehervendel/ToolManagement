@@ -188,7 +188,7 @@ function EditUser() {
           <div>
             <label>New Salary:</label>
             <input
-              type="text"
+              type="number"
               value={newSalary}
               onChange={(e) => setNewSalary(e.target.value)}
               className="NewSalaryInput"
