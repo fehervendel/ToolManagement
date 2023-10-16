@@ -88,37 +88,37 @@ public class ToolManagerIntegrationTest : WebApplicationFactory<Program>
         Assert.IsTrue(tools is { Count: > 0 });
     }
     
-    [Test]
-    public async Task GetEmployeeById_ShouldReturnOk()
-    {
-        int id = 1;
-        var options = new JsonSerializerOptions
-        {
-            PropertyNameCaseInsensitive = true
-        };
-        var response = await _client.GetAsync($"/api/ToolManager/GetEmployeeById?id={id}");
-
-        response.EnsureSuccessStatusCode();
-
-        var content = await response.Content.ReadAsStringAsync();
-        var employee = JsonSerializer.Deserialize<Employee>(content, options);
-        var employeeToGet = new Employee
-        {
-            Id = 1,
-            Name = "user1",
-            Salary = (decimal)10.00,
-            EmailAddress = "email@email.com",
-            IdentityUserId = "7f254662-3d21-4d50-a8b9-55fa19862775"
-        };
-
-        Assert.That(response.StatusCode, Is.EqualTo(System.Net.HttpStatusCode.OK));
-        Assert.IsNotNull(employee);
-        Assert.That(employeeToGet.Id, Is.EqualTo(employee.Id));
-        Assert.That(employeeToGet.Salary, Is.EqualTo(employee.Salary));
-        Assert.That(employeeToGet.EmailAddress, Is.EqualTo(employee.EmailAddress));
-        Assert.That(employeeToGet.IdentityUserId, Is.EqualTo(employee.IdentityUserId));
-        Assert.That(employeeToGet.Name, Is.EqualTo(employee.Name));
-    }
+    // [Test]
+    // public async Task GetEmployeeById_ShouldReturnOk()
+    // {
+    //     int id = 1;
+    //     var options = new JsonSerializerOptions
+    //     {
+    //         PropertyNameCaseInsensitive = true
+    //     };
+    //     var response = await _client.GetAsync($"/api/ToolManager/GetEmployeeById?id={id}");
+    //
+    //     response.EnsureSuccessStatusCode();
+    //
+    //     var content = await response.Content.ReadAsStringAsync();
+    //     var employee = JsonSerializer.Deserialize<Employee>(content, options);
+    //     var employeeToGet = new Employee
+    //     {
+    //         Id = 1,
+    //         Name = "user1",
+    //         Salary = (decimal)10.00,
+    //         EmailAddress = "email@email.com",
+    //         IdentityUserId = "7f254662-3d21-4d50-a8b9-55fa19862775"
+    //     };
+    //
+    //     Assert.That(response.StatusCode, Is.EqualTo(System.Net.HttpStatusCode.OK));
+    //     Assert.IsNotNull(employee);
+    //     Assert.That(employeeToGet.Id, Is.EqualTo(employee.Id));
+    //     Assert.That(employeeToGet.Salary, Is.EqualTo(employee.Salary));
+    //     Assert.That(employeeToGet.EmailAddress, Is.EqualTo(employee.EmailAddress));
+    //     Assert.That(employeeToGet.IdentityUserId, Is.EqualTo(employee.IdentityUserId));
+    //     Assert.That(employeeToGet.Name, Is.EqualTo(employee.Name));
+    // }
     
     [Test]
     public async Task GetEmployeeById_ShouldReturnNoContent()

@@ -14,4 +14,6 @@ public class Tool
 
     public int? CurrentOwnerEmployeeId { get; set; }
    
+    public bool Check { get; set; }
+    
 }

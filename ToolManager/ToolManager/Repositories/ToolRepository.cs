@@ -66,4 +66,22 @@ public class ToolRepository : IToolRepository
         dbContext.Update(tool);
         await dbContext.SaveChangesAsync();
     }
+
+    public async Task ChangeCheckToTrue(int id)
+    {
+        using var dbContext = new ToolManagerContext();
+        Tool tool = await dbContext.Tools.FirstOrDefaultAsync(t => t.Id == id);
+        tool.Check = true;
+        dbContext.Update(tool);
+        await dbContext.SaveChangesAsync();
+    }
+    
+    public async Task ChangeCheckToFalse(int id)
+    {
+        using var dbContext = new ToolManagerContext();
+        Tool tool = await dbContext.Tools.FirstOrDefaultAsync(t => t.Id == id);
+        tool.Check = false;
+        dbContext.Update(tool);
+        await dbContext.SaveChangesAsync();
+    }
 }

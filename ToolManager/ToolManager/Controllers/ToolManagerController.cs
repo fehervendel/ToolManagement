@@ -235,4 +235,34 @@ public class ToolManagerController : ControllerBase
             return StatusCode(500, "Internal server Error");
         }
     }
+    
+    [HttpPut("ChangeCheckToTrue"), Authorize(Roles = "Admin, User")]
+    public async Task<IActionResult> ChangeCheckToTrue(int id)
+    {
+        try
+        {
+            await _toolRepository.ChangeCheckToTrue(id);
+            return Ok();
+        }
+        catch (Exception e)
+        {
+            _logger.LogError(e, "Error changing check");
+            return StatusCode(500, "Internal server Error");
+        }
+    }
+    
+    [HttpPut("ChangeCheckToFalse"), Authorize(Roles = "Admin, User")]
+    public async Task<IActionResult> ChangeCheckToFalse(int id)
+    {
+        try
+        {
+            await _toolRepository.ChangeCheckToFalse(id);
+            return Ok();
+        }
+        catch (Exception e)
+        {
+            _logger.LogError(e, "Error changing check");
+            return StatusCode(500, "Internal server Error");
+        }
+    }
 }

@@ -257,6 +257,9 @@ namespace ToolManager.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int?>("Id"), 1L, 1);
 
+                    b.Property<bool>("Check")
+                        .HasColumnType("bit");
+
                     b.Property<int?>("CurrentOwnerEmployeeId")
                         .HasColumnType("int");
 
