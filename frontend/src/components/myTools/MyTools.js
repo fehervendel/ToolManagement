@@ -10,7 +10,7 @@ function MyTools() {
 
   useEffect(() => {
     const fetchData = async () => {
-      const response = await fetch("https://toolmanagerserver.onrender.com/api/ToolManager/GetAllTools", {
+      const response = await fetch("https://localhost:7173/api/ToolManager/api/ToolManager/GetAllTools", {
         method: 'GET',
         headers: {
           'Authorization': `Bearer ${token}`
