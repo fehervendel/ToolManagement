@@ -22,7 +22,7 @@ public class ToolManagerContext : IdentityDbContext<IdentityUser, IdentityRole, 
             .AddUserSecrets<Program>();
         IConfiguration configuration = configBuilder.Build();
 
-        string connectionString = configuration["ConnectionStrings:Db1"];
+        string connectionString = configuration["ConnectionStrings:Db2"];
         optionsBuilder.UseSqlServer(
             connectionString);
     }

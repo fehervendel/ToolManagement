@@ -26,7 +26,7 @@ public class ToolManagerIntegrationTest : WebApplicationFactory<Program>
     public void Setup()
     {
         _context = new InMemoryToolManagerContext();
-
+        
         DotNetEnv.Env.Load();
         string connectionString = DotNetEnv.Env.GetString("CONNECTION_STRING");
         Environment.SetEnvironmentVariable("CONNECTION_STRING", connectionString);
@@ -124,10 +124,7 @@ public class ToolManagerIntegrationTest : WebApplicationFactory<Program>
     public async Task GetEmployeeById_ShouldReturnNoContent()
     {
         int id = 9999999;
-        var options = new JsonSerializerOptions
-        {
-            PropertyNameCaseInsensitive = true
-        };
+        
         var response = await _client.GetAsync($"/api/ToolManager/GetEmployeeById?id={id}");
         
         response.EnsureSuccessStatusCode();
@@ -139,10 +136,7 @@ public class ToolManagerIntegrationTest : WebApplicationFactory<Program>
     public async Task GettoolById_ShouldReturnNoContent()
     {
         int id = 9999999;
-        var options = new JsonSerializerOptions
-        {
-            PropertyNameCaseInsensitive = true
-        };
+        
         var response = await _client.GetAsync($"/api/ToolManager/GetToolById?id={id}");
         
         response.EnsureSuccessStatusCode();
