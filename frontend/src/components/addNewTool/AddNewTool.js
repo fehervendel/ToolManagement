@@ -14,7 +14,8 @@ const handleSubmit = async (e) => {
     console.log(toolName);
     console.log(toolPrice);
     try {
-        const response = await fetch("https://toolmanagerserver.onrender.com/api/ToolManager/AddTool", {
+        const response = await fetch("https://localhost:7173/api/ToolManager/AddTool", { 
+
             method: "POST",
             headers: {
                 "Content-Type": "application/json",

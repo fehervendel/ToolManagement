@@ -20,7 +20,7 @@ function EditUser() {
   useEffect(() => {
     const fetchUserDetails = async () => {
       try {
-        const response = await fetch(`https://toolmanagerserver.onrender.com/api/ToolManager/GetEmployeeById?id=${userId}`, {
+        const response = await fetch(`https://localhost:7173/api/ToolManager/GetEmployeeById?id=${userId}`, {
           method: "GET",
           headers: {
             Authorization: `Bearer ${token}`,
@@ -47,7 +47,7 @@ function EditUser() {
   };
 
   const fetchData = async () => {
-    const response = await fetch("https://toolmanagerserver.onrender.com/api/ToolManager/GetAllTools", {
+    const response = await fetch("https://localhost:7173/api/ToolManager/GetAllTools", {
       method: "GET",
       headers: {
         Authorization: `Bearer ${token}`,
@@ -67,7 +67,7 @@ function EditUser() {
 
   const handleSaveClick = async () => {
     try {
-      const response = await fetch(`https://toolmanagerserver.onrender.com/api/ToolManager/UpdateEmployeeSalary?id=${userId}&salary=${newSalary}`, {
+      const response = await fetch(`https://localhost:7173/api/ToolManager/UpdateEmployeeSalary?id=${userId}&salary=${newSalary}`, {
         method: "PUT",
         headers: {
           Authorization: `Bearer ${token}`,
@@ -94,7 +94,7 @@ function EditUser() {
       setIsAddingTool(true); 
 
       const response = await fetch(
-        `https://toolmanagerserver.onrender.com/api/ToolManager/AddToolToEmployee?employeeId=${userId}&toolId=${toolId}`,
+        `https://localhost:7173/api/ToolManager/AddToolToEmployee?employeeId=${userId}&toolId=${toolId}`,
         {
           method: "PUT",
           headers: {
@@ -122,7 +122,7 @@ function EditUser() {
       setIsRemovingTool(true); 
 
       const response = await fetch(
-        `https://toolmanagerserver.onrender.com/api/ToolManager/RemoveToolFromEmployee?id=${toolId}`,
+        `https://localhost:7173/api/ToolManager/RemoveToolFromEmployee?id=${toolId}`,
         {
           method: "PUT",
           headers: {
@@ -147,7 +147,7 @@ function EditUser() {
 
   const handleDeleteUser = async () => {
     try {
-      const response = await fetch(`https://toolmanagerserver.onrender.com/api/ToolManager/DeleteEmployeeById?id=${userId}`, {
+      const response = await fetch(`https://localhost:7173/api/ToolManager/DeleteEmployeeById?id=${userId}`, {
         method: "DELETE",
         headers: {
           Authorization: `Bearer ${token}`,

@@ -13,7 +13,7 @@ function ManageUsers() {
 
   useEffect(() => {
     const fetchData = async () => {
-      const response = await fetch("https://toolmanagerserver.onrender.com/api/ToolManager/GetAllEmployees", {
+      const response = await fetch("https://localhost:7173/api/ToolManager/GetAllEmployees", {
         method: "GET",
         headers: {
           Authorization: `Bearer ${token}`,

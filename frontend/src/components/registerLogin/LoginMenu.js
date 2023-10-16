@@ -41,7 +41,7 @@ function LoginMenu() {
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-      await fetch('https://toolmanagerserver.onrender.com/Auth/Login', {
+      await fetch('https://localhost:7173/Auth/Login', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -81,7 +81,7 @@ function LoginMenu() {
     setEmailWarning("");
     setPassowrdWarning("");
     try {
-      const response = await fetch('https://toolmanagerserver.onrender.com/Auth/Register', {
+      const response = await fetch('https://localhost:7173/Auth/Register', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
