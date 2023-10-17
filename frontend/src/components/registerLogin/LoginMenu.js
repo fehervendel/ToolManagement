@@ -135,11 +135,6 @@ function LoginMenu() {
     setIsRegistrationClicked(false);
   }
 
-  function changeShowPassword(){
-    setShowPassword(!showPassword)
-  }
-  console.log(showPassword);
-
   return (<div>
     <div className="welcome-message">
       Welcome! Please {isRegistrationClicked ? 'Register' : 'Login'}
@@ -154,15 +149,8 @@ function LoginMenu() {
           <input type="text" onChange={(e) => setSaveEmail(e.target.value)}></input>
       </div>
       <div className="register-input" id="passwordInput">
-        <label>Password:</label>
-        <div className="showPassword">
-           Show password
-           <input type="checkbox" id="checkbox" checked={showPassword} onChange={changeShowPassword}/>
-        </div>
-         
-          
-        <input type={showPassword ? 'text' : 'password'} onChange={(e) => setSavePassword(e.target.value)}></input>
-        
+        <label>Password:</label>  
+        <input type="password" onChange={(e) => setSavePassword(e.target.value)}></input>
       </div>
       </section>
       <div>
@@ -184,7 +172,10 @@ function LoginMenu() {
             name={inputField.name}
             value={inputValues[inputField.name] || ""}
             warnings={warnings[index]}
+            showPassword={showPassword}
+            setShowPassword={setShowPassword}
             onChange={handleInputChange}/>
+            
           ))}
           <button className="Button" type="submit">Submit</button>
           
