@@ -89,7 +89,12 @@ function MyTools() {
             <th>Id</th>
             <th>Type</th>
             <th>Price</th>
-            <th>Owned</th>
+            <th>
+              <div className="tooltip">
+                Check <i className="fas fa-info-circle"></i>
+                <span className="tooltiptext">If you own the tool, switch the slide to green every week. The admin will uncheck it.</span>
+                </div>
+            </th>
           </tr>
         </thead>
         <tbody>
