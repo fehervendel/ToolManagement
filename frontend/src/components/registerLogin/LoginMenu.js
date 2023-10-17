@@ -15,6 +15,9 @@ function LoginMenu() {
   const [userNameWarning, setUserNameWarning] = useState("");
   const [emailWarning, setEmailWarning] = useState("");
   const [passwordWarning, setPassowrdWarning] = useState("");
+  const [registrationSuccess, setRegistrationSuccess] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
+
  
   
 
@@ -97,6 +100,10 @@ function LoginMenu() {
         const data = await response.json();
         console.log(data); 
         setIsRegistrationClicked(false);
+        setRegistrationSuccess(true);
+        setTimeout(() => {
+          setRegistrationSuccess(false);
+        }, 5000);
       } else {
         const data = await response.json();
         console.log(data);
@@ -128,10 +135,16 @@ function LoginMenu() {
     setIsRegistrationClicked(false);
   }
 
+  function changeShowPassword(){
+    setShowPassword(!showPassword)
+  }
+  console.log(showPassword);
+
   return (<div>
     <div className="welcome-message">
       Welcome! Please {isRegistrationClicked ? 'Register' : 'Login'}
     </div>
+    <p className="register-message">{registrationSuccess ? ("Successful registration! Log in.") : (null)}</p>
     <div className="register-container">
       {!isRegistrationClicked ? (
         <div>
@@ -142,7 +155,14 @@ function LoginMenu() {
       </div>
       <div className="register-input" id="passwordInput">
         <label>Password:</label>
-        <input type="password" onChange={(e) => setSavePassword(e.target.value)}></input>
+        <div className="showPassword">
+           Show password
+           <input type="checkbox" id="checkbox" checked={showPassword} onChange={changeShowPassword}/>
+        </div>
+         
+          
+        <input type={showPassword ? 'text' : 'password'} onChange={(e) => setSavePassword(e.target.value)}></input>
+        
       </div>
       </section>
       <div>

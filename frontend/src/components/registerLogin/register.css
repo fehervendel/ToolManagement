@@ -52,6 +52,7 @@
   .Button:hover {
     background-color: #00b327;
   }
+
   
   .register-button {
     background-color: #007bff;
@@ -75,4 +76,21 @@
     color: red;
     font-size: 14px;
     text-align: left;
+  }
+
+  .register-message{
+    color:#00b327;
+  }
+
+  .showPassword{
+    display: flex;
+  align-items: center;
+  white-space: nowrap;
+  margin-right: 5px;
+  width: 10%;
+  margin-bottom: 10px;
+  }
+
+  #checkbox{
+    margin-bottom: 1px;
   }
