@@ -86,6 +86,98 @@ function ManageTools() {
       )
     : [];
 
+    const handleCheckboxChange = (tool) => {
+      if(tool.check === false){
+        const fetchData = async () => {
+          const response = await fetch(`https://localhost:7173/api/ToolManager/ChangeCheckToTrue?id=${tool.id}`, {
+            method: 'PUT',
+            headers: {
+              'Authorization': `Bearer ${token}`
+            }
+          });
+         if(response.status === 200){
+          const fetchData = async () => {
+            const response = await fetch("https://localhost:7173/api/ToolManager/GetAllTools", {
+              method: 'GET',
+              headers: {
+                'Authorization': `Bearer ${token}`
+              }
+            });
+            const jsonData = await response.json();
+            setTools(jsonData);
+          };
+          fetchData();
+          console.log("Check changed to true")
+         }
+         else{
+          console.error(response.status);
+         }
+        };
+        fetchData();
+      }
+      else{
+        const fetchData = async () => {
+          const response = await fetch(`https://localhost:7173/api/ToolManager/ChangeCheckToFalse?id=${tool.id}`, {
+            method: 'PUT',
+            headers: {
+              'Authorization': `Bearer ${token}`
+            }
+          });
+         if(response.status === 200){
+          const fetchData = async () => {
+            const response = await fetch("https://localhost:7173/api/ToolManager/GetAllTools", {
+              method: 'GET',
+              headers: {
+                'Authorization': `Bearer ${token}`
+              }
+            });
+            const jsonData = await response.json();
+            setTools(jsonData);
+          };
+          fetchData();
+          console.log("Check changed to false")
+         }
+         else{
+          console.error(response.status);
+         }
+        };
+        fetchData();
+      }
+      console.log("Checkbox changed for tool with ID:", tool);
+    };
+
+
+    function handleCheckReset(){
+      tools && tools.map((tool, index) => {
+        const fetchData = async () => {
+          const response = await fetch(`https://localhost:7173/api/ToolManager/ChangeCheckToFalse?id=${tool.id}`, {
+            method: 'PUT',
+            headers: {
+              'Authorization': `Bearer ${token}`
+            }
+          });
+         if(response.status === 200){
+          const fetchData = async () => {
+            const response = await fetch("https://localhost:7173/api/ToolManager/GetAllTools", {
+              method: 'GET',
+              headers: {
+                'Authorization': `Bearer ${token}`
+              }
+            });
+            const jsonData = await response.json();
+            setTools(jsonData);
+          };
+          fetchData();
+          console.log("Check changed to false")
+         }
+         else{
+          console.error(response.status);
+         }
+        };
+        fetchData();
+      })
+    }
+
   return (
     <div>
       <div className="search-bar">
@@ -95,7 +187,7 @@ function ManageTools() {
           value={searchToolId}
           onChange={(e) => setSearchToolId(e.target.value)}
         />
-        <button type="button">Search</button>
+        <button type="button" onClick={handleCheckReset}>Reset Checks</button>
       </div>
       <table className="tables">
         <thead>
@@ -104,6 +196,7 @@ function ManageTools() {
             <th>Type</th>
             <th>Price</th>
             <th>Owner</th>
+            <th>Check</th>
             <th>Delete tool</th>
           </tr>
         </thead>
@@ -119,6 +212,12 @@ function ManageTools() {
                   : employeeData
                   ? tool.currentOwnerEmployee.name
                   : "Loading..."}
+              </td>
+              <td>
+              <label className="switch">
+                      <input type="checkbox" checked={tool.check} onChange={() => handleCheckboxChange(tool)} />
+                      <span className="slider round"></span>
+                    </label>
               </td>
               <td>
                 <button
