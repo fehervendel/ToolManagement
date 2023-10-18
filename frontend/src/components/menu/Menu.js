@@ -16,28 +16,39 @@ const handleLogout = () => {
 
   return (
     <div>
-    {token !== undefined ? (<div>
-        <section></section>
-      <div className="topnav">
-      {userRole === "User" ? (
-        <Link to="/mytools" className={location.pathname === '/MyTools' || location.pathname === '/mytools' ? 'active' : ''}>
-          My Tools
-        </Link>
-      ) : (<div>
-        <Link to="/managetools" className={location.pathname === '/managetools' || location.pathname === '/ManageTools' ? 'active' : ''}>
-          Manage Tools
-        </Link>
-        <Link to="/manageusers" className={location.pathname === '/manageusers' || location.pathname === '/ManageUsers' ? 'active' : ''}>
-          Manage Users
-        </Link>
-        <Link to="addnewtool" className={location.pathname === '/addnewtool' ? 'active' : ''}>
-          Add New Tool
-        </Link>
-      </div>)}
-          <a href="#Logout" id="logOutButton" onClick={(e) => {e.preventDefault(); handleLogout()}}>Logout</a>
-      </div>
-      <section><Outlet/></section>
-    </div>) : (<LoginMenu></LoginMenu>)}
+      {token !== undefined ? (
+        <div>
+          <section></section>
+          <div className="topnav">
+            {userRole === "User" ? (
+              <div>
+                <Link to="/mytools" className={location.pathname === '/MyTools' || location.pathname === '/mytools' ? 'active' : ''}>
+                  My Tools
+                </Link>
+                <Link to="/ToolsForUser" className={location.pathname === '/ToolsForUser' ? 'active' : ''}>
+                  Tools
+                </Link>
+              </div>
+            ) : (
+              <div>
+                <Link to="/managetools" className={location.pathname === '/managetools' || location.pathname === '/ManageTools' ? 'active' : ''}>
+                  Manage Tools
+                </Link>
+                <Link to="/manageusers" className={location.pathname === '/manageusers' || location.pathname === '/ManageUsers' ? 'active' : ''}>
+                  Manage Users
+                </Link>
+                <Link to="/addnewtool" className={location.pathname === '/addnewtool' ? 'active' : ''}>
+                  Add New Tool
+                </Link>
+              </div>
+            )}
+            <a href="#Logout" id="logOutButton" onClick={(e) => {e.preventDefault(); handleLogout()}}>Logout</a>
+          </div>
+          <section><Outlet/></section>
+        </div>
+      ) : (
+        <LoginMenu></LoginMenu>
+      )}
     </div>
   );
 }

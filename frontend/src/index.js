@@ -9,7 +9,7 @@ import ManageTools from './components/manageTools/ManageTools';
 import ManageUsers from './components/manageUsers/ManageUsers';
 import AddNewTool from './components/addNewTool/AddNewTool';
 import EditUser from './components/EditUser/EditUser';
-
+import ToolsForUser from './components/ToolsForUser/ToolsForUser';
 
 
 
@@ -38,6 +38,10 @@ const router = createBrowserRouter([
       {
         path: "/edituser/:userId",
         element: <EditUser />
+      },
+      {
+        path: "/toolsforuser",
+        element: <ToolsForUser />
       }
     ]
   }
