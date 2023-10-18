@@ -43,6 +43,8 @@ function LoginMenu() {
   // test
   const handleSubmit = async (event) => {
     event.preventDefault();
+    setEmailWarning("");
+    setPassowrdWarning("");
     try {
       await fetch('https://localhost:7173/Auth/Login', {
         method: 'POST',
@@ -71,7 +73,16 @@ function LoginMenu() {
           } else {
            navigate("/MyTools");
           }
-        } 
+        }
+        else{
+          // console.log("Else ag:", data["Bad credentials"][0]);
+          if(data["Bad credentials"][0] === "Invalid email"){
+            setEmailWarning(data["Bad credentials"][0])
+          }
+          if(data["Bad credentials"][0] === "Invalid password"){
+            setPassowrdWarning(data["Bad credentials"][0])
+          }
+        }
       })
     } catch(err){
       console.error(err);
@@ -147,10 +158,12 @@ function LoginMenu() {
         <div className="register-input">
           <label>Email:</label>
           <input type="text" onChange={(e) => setSaveEmail(e.target.value)}></input>
+          <div className="warning">{emailWarning}</div>
       </div>
       <div className="register-input" id="passwordInput">
         <label>Password:</label>  
         <input type="password" onChange={(e) => setSavePassword(e.target.value)}></input>
+        <div className="warning">{passwordWarning}</div>
       </div>
       </section>
       <div>
