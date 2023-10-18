@@ -148,7 +148,7 @@ function ManageTools() {
 
 
     function handleCheckReset(){
-      tools && tools.map((tool, index) => {
+      tools && Promise.all(tools.map((tool, index) => {
         const fetchData = async () => {
           const response = await fetch(`https://localhost:7173/api/ToolManager/ChangeCheckToFalse?id=${tool.id}`, {
             method: 'PUT',
@@ -174,8 +174,8 @@ function ManageTools() {
           console.error(response.status);
          }
         };
-        fetchData();
-      })
+       return fetchData();
+      }))
     }
 
   return (

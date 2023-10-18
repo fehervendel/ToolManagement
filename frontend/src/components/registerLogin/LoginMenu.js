@@ -113,7 +113,7 @@ function LoginMenu() {
         if(inputValues.userName === undefined || inputValues.userName === ""){
           setUserNameWarning("Please enter a username");
         }
-        if(data.DuplicateEmail && data.DuplicateEmail || inputValues.email === undefined){
+        if((data.DuplicateEmail && data.DuplicateEmail) || inputValues.email === undefined){
           setEmailWarning("Email is already taken");
         }
         if(inputValues.email === undefined){
