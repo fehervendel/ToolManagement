@@ -1,33 +1,46 @@
 # ToolManagement
 
-## Short description:
+### Short description:
 The app will handle the tools inventory of a Carpentry Company.
 The company's main problem is that tools keep disappearing, the owner has no idea who last used them, resulting in great financial loss.
 The company needs a tool managment system, where the owner can assign each tool to employees. He should also be able to keep track of the available inventory.
 
-## Tasks:
-### Create Different User levels
-- Employee user, with permission to see which tools he officially took, permission to see when he took the tools and when he has to bring it back.
-- Admin user, with permission to see all employee's inventory and also assign tools to employees and take them back.
-  Admin can also add new tools to the inventory. Admin receives automated notification if any tools aren't brought back in time.
-  Can mark very expensive tools for autotracking.
+### Backend
+The backend of ToolManagement is build with ASP.NET. It provides essential functionalities for entity management and user authentication.
 
-### Models
-- Employee: Has id, name, salary, taken tools list, list permissions
-- Tool: id, type, price, isInStorage
-- CompanyInventory: a list of the tools per tool type
+## Features
+User authentication for secure login and registration.
+Endpoints for creationg, editing and deleting tools and users.
+Authentication middleware to ensure certain actions available only to logged-in users.
 
-### Service
-- New User registration
-- User login
-- Authentication with session token to grant permissions (Identity framework)
-- Tools assignment service
-- Inventory control service
-- Permission service
-- Statistics generation
-- File Writing
+## Technologies used
+ASP.NET Core.
+Athentication using JWT tokens.
+SQL server for database.
 
-## Optional tasks:
-- Optional login with google account
-- QR code generation for tools
-- QR code reading
+## Setup
+Clone this repository.
+Run dotnet restore to install dependencies.
+Set up your SQL server database and update the connection string in appsettings.json.
+Run dotnet ef database update to apply database migrations.
+
+### Frontend
+The frontend of ToolManagement is built with React.js. It offers an intuitive user interface for browsing and searching tools.
+
+## Features
+Listing tools and users.
+User friendly filtering on tools and users as well.
+Editing users based on user role(admin only).
+Adding new tools(admin only).
+Check ownership statuses.
+
+## Technologies used
+React.js.
+React router for navigation.
+Fetch for API communication.
+
+## Setup
+Clone this repository.
+Run npm install to install dependencies.
+Update API base URLs.
+Run npm start.
